@@ -1,0 +1,204 @@
+---
+title: "时间网络分析"
+format: html
+editor: visual
+---
+
+## 1 时间网络分析概述
+
+#### 1.1 几种数据类型
+
+首先，从测量次数角度，我们要注意区分几种数据类型：单一测量数据（每人一个测量）、面板数据（许多人测量了几次）、N = 1时间序列数据（一个人测量了多次）和N \> 1时间序列数据（几个人测量了多次）。
+
+#### 1.2 时间网络分析
+
+时间网络分析（Temporal network analysis）是网络分析的最新进展之一，它将关系和时间维度结合到一个单一的分析框架中，即：时间网络，也称为时间序列网络、时变网络、动态网络或演化网络。
+
+时间网络分析是一种新颖而具有前景的方法，它比其他更常用的纵向建模技术\[如交叉滞后面板模型(CLPM)，回归模型\]具有优势。
+
+首先，时态网络分析中经常涉及到建立图形向量自回归(GVAR)模型，其允许估计考虑时间上个体内差异的有向网络，而CLPM没有分离个体内效应（within-person effects）和个体间效应（between-person effects），这可能导致变量之间因果关系的不正确结论。尽管后来发展起来的CLPM ------随机截距 CLPM可以将时间不变（time-invariant）、类似特质（trait-like）的个体间效应与个体内效应区分开来，但它需要更大的样本和更大的检验效能，特别是对于具有更多变量的更复杂的模型。
+
+![](images/几种效应设计图.png){引用自WITH R NETWORK PSYCHOMETRICS="" fig-align="center"}
+
+其次，时间网络分析评估模型中每个变量的中心性，这可以识别网络中最重要的(或最有影响力的)节点。由于高度中心的节点影响网络中最多的变量，因此它们可能是干预的有用目标。
+
+#### 1.3 分析思路
+
+时间网络分析还在发展之中，并不完善。对于N=1的时间序列网络分析，主要思想是通图形向量自回归模型（GVAR）进行处理；对于N\>1的时间序列，可能会更多地考虑多层VAR（mlVAR包实现了这种统计建模方法）。
+
+在VAR中，在连续的时间点之间使用线性回归来建模时间依赖关系，允许人们在控制了时间效应（同期效应）后，获得跨时间的关系（时间效应）和同一测量窗口中的关系的单独估计。VAR变体是这一部分的核心焦点是图形VAR（GVAR）模型，其中同时的效果被进一步建模为高斯图形模型。因此，GVAR模型返回两种网络结构：一个时间网络，这是一个时间关系的有向网络；一个同时网络，它是一个同时关系的无向网络。
+
+#### 1.4 工具包
+
+可以实现上述几种时间序列数据网络分析的R包有多种，目前来看并不统一，单是我在各类文献中看到的工具包就不少，比如，有用[时间社会网络分析（tsna）](https://link.springer.com/chapter/10.1007/978-3-031-54464-4_17#Sec6)的，有用多水平向量自回归([mlVAR包](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7530190/)，Multi-Level Vector Autoregression)的，也有用[时变向量自回归包（mgm包）](https://mental.jmir.org/2024/1/e50136)以及[psychonetrics包（面板GVAR模型）](https://www.researchgate.net/publication/374951207_Peer_functioning_difficulties_may_exacerbate_symptoms_of_attention-deficithyperactivity_disorder_and_irritability_over_time_a_temporal_network_analysis?enrichId=rgreq-a67fefe7d73659d604617e894336fc35-XXX&enrichSource=Y292ZXJQYWdlOzM3NDk1MTIwNztBUzoxMTQzMTI4MTIwMTIwMzk2OEAxNjk4MjQ3Nzg1NTQz&el=1_x_3&_esc=publicationCoverPdf)......
+
+虽然让人眼花缭乱，但底层逻辑是相似的，主要还是要看你的研究类型和目的。譬如，mlVAR会分离出以下三种网络：
+
+![](images/时间序列---三种网络.png){引用自WITH R NETWORK PSYCHOMETRICS="" fig-align="center"}
+
+我在上述对应R包的名字上附上了具体文献或者代码仓库的超链接，你如果感兴趣的话，可以点进去看看这些文献对Temporal network analysis的具体实现方法。
+
+个人比较推荐使用**mlVAR**构建时间序列网络模型。
+
+### 2 R语言实战
+
+#### 2.1 准备数据
+
+为了避免版本兼容性问题，大家可以先跳转到文末看看我使用的R语言环境。
+
+先导入需要使用的程序包，没有安装的请先安装。
+
+```{r}
+#| label: load-packages
+#| include: false
+
+library('mlVAR')
+library('qgraph') 
+library("networktools")
+```
+
+本次我们用mlVAR包的mlVARsim函数模拟一份数据(实际是拟合也了一个时间网络模型)，为了减轻电脑的计算负担，设置受试者人数为50，节点数为8个，测量次数是30，阶数lag为1，其它都是默认设置。
+
+```{r}
+Model = mlVARsim(nPerson = 50,nNode = 8, nTime = 30, lag=1)
+```
+
+查看数据：
+
+```{r}
+head(Model$Data)
+```
+
+查看节点名：
+
+```{r}
+Model$vars
+```
+
+查看受试者变量：
+
+```{r}
+Model$idvar
+```
+
+绘图：
+
+```{r}
+plot(Model)
+```
+
+#### 2.2 拟合模型
+
+好戏开始：用mlVAR函数拟合时间网络模型！
+
+这里面的data、vars、idvar是必须写的，分别表示数据、要分析的变量名、代表受试者的变量。lags可以选用默认参数，estimator是估计器，具体的选项可以查看帮助文档，这里选择lmer；contemporaneous（同期网络）、temporal（时序网络）估计方法都采用"correlated"；nCores指定使用的cpu核心数，计算量不小，可以适当大一些。
+
+```{r}
+fit1 = mlVAR(data = Model$Data, 
+            vars = Model$vars, 
+            idvar = Model$idvar, 
+            lags = 1, 
+            estimator = "lmer",
+            temporal = "correlated",
+            contemporaneous = "correlated",
+            nCores = 8,
+            verbose =F
+ )
+```
+
+总结模型：
+
+```{r}
+summary(fit1)
+```
+
+上面给出了大量的信息。值得注意的是，mlVAR包会输出3种效应：Temporal effects、Contemporaneous effects、Between-subject effects，分别对应时序网络、同期网络和个体间网络。
+
+-   **Temporal effects（时间效应）**：这是指变量在时间上对自身或其它变量的影响，这些效应通常是通过滞后回归权重来估计的，可以捕捉变量随时间的动态关系 。时序网络中的边是指变量在上个时间点t-1对下个时间点t的各节点的预测能力（控制了上个时间点t-1上的其他变量之后）。
+
+-   **Contemporaneous effects（同期效应）**：这是指在相同时间点上变量之间的关系，可以是简单的相关关系或偏相关关系。这些关系通常是通过模型残差的相互关系来估计的，可以揭示在同一时间点上变量之间的直接联系 。
+
+-   **Between-subject effects（个体间效应）**：这是指在不同个体之间（平均水平层面的）变量关系的差异，可以是相关关系或偏相关关系。这些效应反映了不同个体在变量关系上的差异，有助于理解不同个体在心理过程上的差异 。
+
+#### 2.3 可视化
+
+我们可以分别绘制这些网络图：
+
+```{r}
+# 同期网络
+contemporaneous = plot(fit1, type = "temporal", title = "Estimated temporal relationships", 
+     rule = "and",layout = "circle")
+```
+
+```{r}
+# 时序网络
+temporal=plot(fit1, type = "contemporaneous", rule = "and",
+     title = "Estimated contemporaneous relationships", layout = "circle")
+```
+
+```{r}
+# 受试者间网络  必须取名between，否则报错
+between = plot(fit1, type = "between", rule = "or",
+     title = "Estimated between relationships", layout = "circle")
+```
+
+#### 2.4 计算中心性
+
+可以跟横断面网络一样，计算或者开展后续一些常用的指标和检验，比如中心性，桥梁症状。
+
+```{r}
+# 计算中心性
+centrality(contemporaneous)  
+```
+
+可以将其绘制出来，下面的代码依次绘制同期网络、时序网络和个体间网络。
+
+```{r}
+centralityPlot(contemporaneous) 
+```
+
+```{r}
+centralityPlot(temporal)
+```
+
+```{r}
+centralityPlot(between)
+```
+
+完全可以对绘图函数的参数做些个性化调整，这里不多展示了。
+
+#### 2.5 桥梁症状分析
+
+先人为对模拟数据的节点进行分组：
+
+```{r}
+groups=c(rep('A',4),rep('B',2),rep('C',2))
+```
+
+计算桥梁中心性指标：
+
+```{r}
+b = bridge(contemporaneous, communities= groups, directed=F)
+b
+```
+
+简单绘图：
+
+```{r}
+plot(b, include=c("Bridge Expected Influence (2-step)", "Bridge Strength", "Bridge Closeness"),
+     theme_bw=F, raw0 = T, signed=T) 
+```
+
+### 3 几个需要注意的地方
+
+时间网络分析目前还不完善，上述流程并没有覆盖到之前我们做横断面网络的所有评估指标和检验方法，比如稳定性、精确性、差异性检验，我还没有找到合适的R包可以很方便地对其进行分析（估计得自己写重抽样代码）。
+
+此外，时间网络分析不同于CLPM网络分析，其对数据有一些要求，比如说测量次数多、满足多元正态分布、具备平稳性......
+
+你如果有一份生态瞬时数据或者密集追踪数据，且想要进行时间网络分析，建议在建模前检查下数据，包括正态性（不服从也可以做）、平稳性（KPSS平稳性检验，文献提到可以用R包tseries实现，要一个个做，所以代码有些复杂），等等。
+
+#### **运行环境**
+
+`{r}`
+
+`sessionInfo()}`

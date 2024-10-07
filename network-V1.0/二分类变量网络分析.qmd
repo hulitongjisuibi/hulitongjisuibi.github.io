@@ -1,0 +1,126 @@
+---
+title: "二分类变量的网络分析"
+format: html
+editor: visual
+---
+
+### 1 简介
+
+如果网络分析的对象是二元分类变量，那么就需要使用到一个叫做**Ising**的模型。Ising模型是描述由二分类变量组成的系统的一种概率模型。它假设系统中的每个节点（变量）只能取二值状态（例如，-1 或 +1，对应于我们常见的 0/1 编码），并通过一种邻接结构来描述这些变量的相互作用。
+
+-   **节点（variables）**：表示二分类变量，如某个人在某一特定时间点上的情绪是否为积极或消极，某一疾病症状是否存在，等等。
+
+-   **边（edges）**：表示两个二分类变量之间的相互作用，通常由条件依赖关系建模。
+
+-   **配合外部场（external field）**：描述每个变量单独的偏好或倾向。
+
+Ising模型的目标是捕捉这些变量之间的相互影响，并揭示它们的网络结构。
+
+说起来比较复杂，为了方便理解，你可以将其理解成一组logistic回归模型。
+
+### 2 R语言示例
+
+在 R 中，可以使用 `IsingFit` 或 `mgm` 包来拟合 Ising 模型，并分析二分类变量的网络结构。
+
+#### 2.1 使用 IsingFit
+
+先导入包
+
+```{r}
+#| label: load-packages
+#| include: false
+
+
+# 如果没有安装的话，请先安装IsingFit包：install.packages("IsingFit")
+# 其他的包也是一样的，后面会用到
+
+# 导入包
+library(IsingFit)
+library(qgraph)
+library(mgm)
+```
+
+模拟一份数据，用于拟合网络模型。
+
+```{r}
+myData = read.table('https://www.statmodel.com/usersguide/chap7/ex7.4.dat',col.names = c("x1", "x2", "x3", "x4","other"))
+data = myData[,1:4]
+head(data)
+```
+
+拟合模型：
+
+```{r}
+# 拟合 Ising 模型
+fit = IsingFit(data, family = "binomial",plot = T)
+
+# 查看拟合结果
+print(fit)
+```
+
+出来的图连线比较少，可能与随机模拟的数据本身有关。这个图与我们提取关系矩阵用qgraph画图是一样的
+
+```{r}
+qgraph(fit$weiadj,layout = 'spring')
+```
+
+可以继续计算中心性：
+
+```{r}
+centrality(fit$weiadj)
+```
+
+绘制中心性图：
+
+```{r}
+centralityPlot(fit$weiadj, 
+               include=c("Strength",'Closeness',"Betweenness"))
+```
+
+#### 2.2 使用mgm
+
+这个也是非常简单的，几行代码可以搞定：
+
+```{r}
+# 使用 mgm 包拟合 Ising 模型
+# 二分类变量用 type = "c" 表示 (category)
+fit_mgm = mgm(data = as.matrix(data), 
+               type = rep("c", 4), 
+               level = rep(2, 4),  # 2 表示二分类变量
+               lambdaSel = "EBIC",  # 使用 EBIC 选择正则化参数
+               ruleReg = "OR")  # 使用 OR 规则连接
+```
+
+```{r}
+# 查看权重领接矩阵
+print(fit_mgm$pairwise$wadj)
+```
+
+可视化：
+
+```{r}
+qgraph(fit_mgm$pairwise$wadj,
+       edge.color = fit_mgm$pairwise$edgecolor,
+       layout = "spring",
+       labels =  autism_data$colnames)
+```
+
+计算中心性：
+
+```{r}
+centrality(fit_mgm$pairwise$wadj)
+```
+
+绘制中心性：
+
+```{r}
+centralityPlot(fit_mgm$pairwise$wadj,
+               include=c("Strength",'ExpectedInfluence',
+                            'Closeness',"Betweenness"))
+```
+
+**运行环境：**
+
+```{r}
+sessionInfo()
+```

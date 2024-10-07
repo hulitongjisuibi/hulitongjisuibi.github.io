@@ -1,0 +1,51 @@
+project:
+  type: website
+
+# website:
+#   title: "MyNetworkanalysis"
+#   navbar:
+#     left:
+#       - href: index.qmd
+#         text: Home
+#       - about.qmd
+
+  
+  
+website:
+  page-navigation: true
+  sidebar:   
+    tools:
+      - icon: github
+        menu:
+          - text: Source Code
+            href:  https://github.com/hulitongjisuibi/hulitongjisuibi.github.io
+    style: "docked"
+    search: true
+    contents:
+      - text: "关于本书"
+        href: index.qmd
+      - text: "网络分析基础及指标"
+        href: 网络分析基础及指标.qmd
+      - section: "网络分析实战"
+        contents:
+          - 横断面网络完整版.qmd
+          - 不同网络比较.qmd
+          - 二分类变量网络分析.qmd
+          - 混合变量网络分析.qmd
+          - 有调节的网络.qmd
+          - 交叉滞后网络.qmd
+          - 时间网络分析.qmd
+          - 协变量处理方法.qmd
+          - 样本量估算.qmd
+          - 参考文献.qmd
+   
+   
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    fontsize: 1.1em
+    linestretch: 1.7
+editor: visual
+

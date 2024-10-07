@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>有调节的网络</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./交叉滞后网络.html" rel="next">
+<link href="./混合变量网络分析.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./横断面网络完整版.html">网络分析实战</a></li><li class="breadcrumb-item"><a href="./有调节的网络.html">有调节的网络</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+        <div class="sidebar-tools-collapse">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-collapse-item" href="https://github.com/hulitongjisuibi/hulitongjisuibi.github.io">
+            Source Code
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于本书</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./网络分析基础及指标.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">网络分析基础及指标</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">网络分析实战</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./横断面网络完整版.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">横断面网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./不同网络比较.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">不同网络比较</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./二分类变量网络分析.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">二分类变量的网络分析</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./混合变量网络分析.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">混合变量网络分析</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./有调节的网络.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">有调节的网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./交叉滞后网络.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">交叉滞后网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./时间网络分析.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">时间网络分析</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./协变量处理方法.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">协变量处理方法</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./样本量估算.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">样本量估算</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#有调节的网络简介" id="toc-有调节的网络简介" class="nav-link active" data-scroll-target="#有调节的网络简介">1 有调节的网络简介</a></li>
+  <li><a href="#如何构建有调节的网络" id="toc-如何构建有调节的网络" class="nav-link" data-scroll-target="#如何构建有调节的网络">2 如何构建有调节的网络</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">有调节的网络</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="有调节的网络简介" class="level3">
+<h3 class="anchored" data-anchor-id="有调节的网络简介">1 有调节的网络简介</h3>
+<ul>
+<li><p>网络模型是分析多变量数据中依赖关系的强大工具，尤其在精神病学、心理学研究中越来越受欢迎。</p></li>
+<li><p>传统的网络模型，如高斯图形模型（GGM），假设变量对之间的相互作用是独立的，但这在心理学、症状科学研究中往往不现实。</p></li>
+<li><p>有学者提出了一种新的网络模型——有调节的网络模型（Moderated Network Models，MNMs），它通过引入调节变量来扩展传统的成对网络模型，提出了一种基于L1正则化的节点级回归方法来估计这种模型。</p></li>
+<li><p>模拟研究发现，MNM在检测调节效应方面优于基于分割样本的方法，如网络比较（NCT）和融合图形lasso（FGL）。</p></li>
+</ul>
+<p>调节效应（Moderation Effect）大家应该不陌生，其是统计学和社会科学研究中的一个重要概念，描述了一个变量（称为调节变量或调节因子）如何影响另外两个变量之间关系的方向（正向或负向）和强度（强或弱）的现象。换句话说，调节效应是指一个变量的存在改变了另外两个变量之间关系的模式。</p>
+<p>将调节效应扩展到网络模型，构建有调节的网络模型，可以为我们提供更深入、更细致的洞察，更好地理解变量间复杂的相互关系，具备一些作用和优势，比如：构建更真实的模型；发现潜在的调节变量；发现和确认哪些变量可能作为重要的调节变量，影响其他变量间的关系；提高预测准确性；个性化干预：解决研究间的不一致性；提高模型的解释力；探索变量的非线性关系。</p>
+<p>理论层面的内容不是短短的篇幅可以解释清楚的，大家不妨去读一读一篇名为《Moderated Network Models》的论文，很经典，论文里面有对有调节的网络模型的详细介绍，甚至还提供了完全可以复现的代码，以及对代码和结果的解释。</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/有调节的网络模型-论文.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="如何构建有调节的网络" class="level3">
+<h3 class="anchored" data-anchor-id="如何构建有调节的网络">2 如何构建有调节的网络</h3>
+<p>为了避免版本兼容性问题，大家可以先跳转到文末看看我使用的R语言环境。</p>
+<section id="mgm包" class="level4">
+<h4 class="anchored" data-anchor-id="mgm包">2.1 mgm包</h4>
+<p>本次我们会使用到一个叫做mgm的R包，前面计算可预测性值的时候是有用过的，这次我们同样会用它来构建一个有调节的网络模型。</p>
+<p>按照惯例，我们先导入包和数据，如果你还没有安装，请先安装。</p>
+</section>
+<section id="演示用的数据" class="level4">
+<h4 class="anchored" data-anchor-id="演示用的数据">2.2 演示用的数据</h4>
+<p>本次将采用一个叫做msq_p5的数据集来进行演示，此数据集内置于mgm包，包含5个变量、3896行，变量的大概含义：</p>
+<ul>
+<li><p><strong>hostile</strong> - 主持敌意或敌对情绪的倾向。</p></li>
+<li><p><strong>lonely</strong> - 感到孤独或被排斥的情绪。</p></li>
+<li><p><strong>nervous</strong> - 感到紧张或不安的情绪。</p></li>
+<li><p><strong>sleepy</strong> - 感到困倦或疲倦的情绪。</p></li>
+<li><p><strong>depressed</strong> - 感到沮丧或情绪低落的倾向。</p></li>
+</ul>
+<p>具体的含义和更多的细节请查询mgm包的帮助文档，数据具体如何并不重要，在此仅演示用法。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(msq_p5) </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(msq_p5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3896    5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(msq_p5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   3896 obs. of  5 variables:
+ $ hostile  : num  -0.488 -0.488 -0.488 -0.488 -0.488 ...
+ $ lonely   : num  0.728 -0.644 -0.644 0.728 -0.644 ...
+ $ nervous  : num  1.002 -0.545 -0.545 2.548 -0.545 ...
+ $ sleepy   : num  -0.233 -0.233 -1.186 -0.233 -0.233 ...
+ $ depressed: num  -0.6 -0.6 -0.6 0.867 -0.6 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(msq_p5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     hostile     lonely    nervous     sleepy  depressed
+1 -0.4879522  0.7280507  1.0018084 -0.2334325 -0.5998642
+2 -0.4879522 -0.6442210 -0.5445646 -0.2334325 -0.5998642
+3 -0.4879522 -0.6442210 -0.5445646 -1.1857391 -0.5998642
+4 -0.4879522  0.7280507  2.5481814 -0.2334325  0.8672236
+5 -0.4879522 -0.6442210 -0.5445646 -0.2334325 -0.5998642
+6 -0.4879522 -0.6442210 -0.5445646  0.7188742  0.8672236</code></pre>
+</div>
+</div>
+</section>
+<section id="建模" class="level4">
+<h4 class="anchored" data-anchor-id="建模">2.3 建模</h4>
+<p>上一节没有详细说明mgm包和mgm函数，是准备在这里面进行介绍。</p>
+<p>mgm包的作用是Estimating Time-Varying k-order Mixed Graphical Models，也就是估计时变k阶混合图模型。更具体的，它通过弹性网正则化邻域回归估计时变混合图模型和混合VAR模型。其中的mgm函数就是用于建模的主函数，主要有下面几个参数（本期次用到的）：</p>
+<ul>
+<li><p>data接收矩阵输入；</p></li>
+<li><p>type指定变量类型（因为mgm是为混合图模型设计的，所以很可能会遇到混合类型的数据）；</p></li>
+<li><p>level指定变量的水平（如果是连续变量，水平默认=1）；</p></li>
+<li><p>ambdaSel指定选择Lq正则化的调优方法：要么CV交叉验证，要么EBIC（Extended Bayesian Information Criterion）。</p></li>
+<li><p>ruleReg用于指定组合来自邻域回归的估计值的规则，对于成对交互作用，两个估计值(一个来自A对B的回归，一个来自B对A的回归)必须在单个边缘参数中组合。ruleReg=“AND”要求所有估计值都不为零，以便将边缘设置为存在。ruleReg=“OR”要求至少有一个估计值不为零，以便将边缘设置为出现。</p></li>
+<li><p>moderators接收一个整数向量，指定纳入模型的调节变量，这里我们不清楚哪个是潜在的调节变量，不妨探索性设置为每个节点。</p></li>
+<li><p>scale=T是默认的，用于标准化连续变量，做调节效应是得做这么一件事。</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mgm_mod <span class="ot">=</span> <span class="fu">mgm</span>(<span class="at">data =</span> <span class="fu">as.matrix</span>(msq_p5), </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">type =</span> <span class="fu">rep</span>(<span class="st">"g"</span>, <span class="dv">5</span>), <span class="co">#指定变量类型，均为连续变量g</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">level =</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>),  <span class="co">#连续变量的水平默认=1</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">lambdaSel =</span> <span class="st">"EBIC"</span>, <span class="co">#采用EBIC估计</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">lambdaGam =</span> .<span class="dv">5</span>,  <span class="co">#lasso惩罚系数，也可换用'CV'</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">ruleReg =</span> <span class="st">"AND"</span>, </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">moderators =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="co">#因调节变量未知，探索性设置</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">scale =</span> <span class="cn">TRUE</span> <span class="co">#标准化,均值为0、标准差为1 </span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>               )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |--------------                                                        |  20%
+  |                                                                            
+  |----------------------------                                          |  40%
+  |                                                                            
+  |------------------------------------------                            |  60%
+  |                                                                            
+  |--------------------------------------------------------              |  80%
+  |                                                                            
+  |----------------------------------------------------------------------| 100%
+Note that the sign of parameter estimates is stored separately; see ?mgm</code></pre>
+</div>
+</div>
+</section>
+<section id="估计效应值" class="level4">
+<h4 class="anchored" data-anchor-id="估计效应值">2.4 估计效应值</h4>
+<p>接下来，显示显著的效应项：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mgm_mod<span class="sc">$</span>interactions<span class="sc">$</span>indicator</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+      [,1] [,2]
+ [1,]    1    3
+ [2,]    1    4
+ [3,]    1    5
+ [4,]    2    3
+ [5,]    2    4
+ [6,]    2    5
+ [7,]    3    4
+ [8,]    3    5
+ [9,]    4    5
+
+[[2]]
+     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    1    2    4
+[3,]    1    3    4
+[4,]    3    4    5</code></pre>
+</div>
+</div>
+<p>查看成对交互（边）：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">showInteraction</span>(<span class="at">object =</span> mgm_mod, <span class="at">int =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Interaction: 2-5 
+Weight:  0.4318148 
+Sign:  1  (Positive)</code></pre>
+</div>
+</div>
+<p>边2-5的权重是0.4318148，它的含义与我们在横断面网络中计算得到的边缘权重类似。还可以查看三向交互（3-way interaction，即调节效应）：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">showInteraction</span>(<span class="at">object =</span> mgm_mod, <span class="at">int =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Interaction: 3-4-5 
+Weight:  0.0564465 
+Sign:  1  (Positive)</code></pre>
+</div>
+</div>
+<p>节点3-4-5之间的权重是0.0564465，这个不好解释，可以再分开查询下3-5,4-5的效应。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">showInteraction</span>(<span class="at">object =</span> mgm_mod, <span class="at">int =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Interaction: 4-5 
+Weight:  0.1534387 
+Sign:  1  (Positive)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">showInteraction</span>(<span class="at">object =</span> mgm_mod, <span class="at">int =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Interaction: 3-5 
+Weight:  0.1029161 
+Sign:  1  (Positive)</code></pre>
+</div>
+</div>
+<p>根据这两个成对效应指标，我们可以这样解释3-4-5之间的调节效应：</p>
+<p>当nervous（节点3） 为0时，sleepy （节点4）与depressed（节点5）的成对交互作用为0.153；当紧张增加1个单位时，成对交互作用增加约0.06（ 0.0564465 ）；当sleepy为0时，抑郁与紧张之间的成对交互作用约为0.103，当sleepy增加1个单位时，nervous和depressed的成对交互作用增加约0.06。</p>
+</section>
+<section id="可视化" class="level4">
+<h4 class="anchored" data-anchor-id="可视化">2.5 可视化</h4>
+<p>mgm提供了可视化有调节网络的函数：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 显示全部效应</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FactorGraph</span>(<span class="at">object =</span> mgm_mod,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">edge.labels =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">labels =</span> <span class="fu">colnames</span>(msq_p5))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="有调节的网络_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>如果不想显示成对交互作用，也可以仅显示三向交互：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FactorGraph</span>(<span class="at">object =</span> mgm_mod,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">labels =</span> <span class="fu">colnames</span>(msq_p5),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">PairwiseAsEdge =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">edge.labels =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="有调节的网络_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>我们也可以用常规思路估计和可视化网络，思路是先提取矩阵(比如这里是mgm_mod<span class="math inline">\(pairwise\)</span>wadj)，然后再传入qgraph函数。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mgm_mod<span class="sc">$</span>pairwise<span class="sc">$</span>wadj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           [,1]      [,2]       [,3]       [,4]      [,5]
+[1,] 0.00000000 0.0000000 0.11412907 0.06689801 0.2365030
+[2,] 0.00000000 0.0000000 0.11784001 0.07001690 0.4318148
+[3,] 0.11412907 0.1178400 0.00000000 0.05279325 0.1029161
+[4,] 0.06689801 0.0700169 0.05279325 0.00000000 0.1534387
+[5,] 0.23650303 0.4318148 0.10291606 0.15343868 0.0000000</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>q <span class="ot">=</span> <span class="fu">qgraph</span>(mgm_mod<span class="sc">$</span>pairwise<span class="sc">$</span>wadj,<span class="co">#相关矩阵</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">layout =</span> <span class="st">"spring"</span>,<span class="co">#图形布局算法</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">details =</span> <span class="cn">TRUE</span>, <span class="co">#显示细节</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">theme=</span><span class="st">'colorblind'</span><span class="co">#主题</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>           ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="有调节的网络_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>如果调节变量是分类的，可以分别估计不同调节水平下的网络：思路是先分离，然后再估计网络。本例没有分类变量，所以就不演示了。</p>
+<p>还可以利用mgm自带的函数进行稳定性检验（edge），先抽样：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>res_obj <span class="ot">=</span> <span class="fu">resample</span>(<span class="at">object =</span> mgm_mod, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> <span class="fu">as.matrix</span>(msq_p5),</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nB =</span> <span class="dv">50</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">pbar=</span>F) <span class="co">#为了方便，仅抽样少数次</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>然后可以借助plotRes绘图：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plotRes</span>(<span class="at">object =</span> res_obj, </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">labels =</span> <span class="cn">NULL</span>, </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">25</span>, <span class="dv">0</span>, .<span class="dv">25</span>, .<span class="dv">5</span>, .<span class="dv">75</span>))</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="有调节的网络_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>本次出现了”长的对象长度不是短的对象长度的整倍数”的警告信息，暂不知如何解决，欢迎指导或者纠正。get到解决方案后，我会对这块内容进行修订、补充。</p>
+</blockquote>
+</section>
+<section id="运行环境" class="level4">
+<h4 class="anchored" data-anchor-id="运行环境"><strong>运行环境</strong></h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.3.2 (2023-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19045)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=Chinese (Simplified)_China.utf8 
+[2] LC_CTYPE=Chinese (Simplified)_China.utf8   
+[3] LC_MONETARY=Chinese (Simplified)_China.utf8
+[4] LC_NUMERIC=C                               
+[5] LC_TIME=Chinese (Simplified)_China.utf8    
+
+time zone: Asia/Shanghai
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] qgraph_1.9.8 mgm_1.2-14  
+
+loaded via a namespace (and not attached):
+ [1] shape_1.4.6       gtable_0.3.4      xfun_0.41         ggplot2_3.5.0    
+ [5] htmlwidgets_1.6.2 psych_2.3.9       lattice_0.21-9    quadprog_1.5-8   
+ [9] vctrs_0.6.4       tools_4.3.2       generics_0.1.3    stats4_4.3.2     
+[13] parallel_4.3.2    tibble_3.2.1      fansi_1.0.5       cluster_2.1.4    
+[17] pkgconfig_2.0.3   Matrix_1.6-5      data.table_1.15.4 checkmate_2.3.0  
+[21] lifecycle_1.0.4   compiler_4.3.2    stringr_1.5.1     munsell_0.5.0    
+[25] mnormt_2.1.1      codetools_0.2-19  htmltools_0.5.7   glasso_1.11      
+[29] glmnet_4.1-8      fdrtool_1.2.17    yaml_2.3.7        htmlTable_2.4.2  
+[33] Formula_1.2-5     pillar_1.9.0      iterators_1.0.14  Hmisc_5.1-1      
+[37] foreach_1.5.2     rpart_4.1.21      abind_1.4-5       nlme_3.1-163     
+[41] lavaan_0.6-17     gtools_3.9.5      tidyselect_1.2.0  digest_0.6.33    
+[45] stringi_1.8.1     dplyr_1.1.4       reshape2_1.4.4    splines_4.3.2    
+[49] fastmap_1.1.1     grid_4.3.2        colorspace_2.1-0  cli_3.6.2        
+[53] magrittr_2.0.3    base64enc_0.1-3   survival_3.5-7    utf8_1.2.4       
+[57] pbivnorm_0.6.0    foreign_0.8-85    corpcor_1.6.10    scales_1.3.0     
+[61] backports_1.4.1   rmarkdown_2.25    jpeg_0.1-10       igraph_2.0.1.1   
+[65] nnet_7.3-19       gridExtra_2.3     png_0.1-8         pbapply_1.7-2    
+[69] evaluate_0.23     knitr_1.45        rlang_1.1.3       Rcpp_1.0.11      
+[73] glue_1.6.2        rstudioapi_0.16.0 jsonlite_1.8.7    R6_2.5.1         
+[77] plyr_1.8.9       </code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./混合变量网络分析.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">混合变量网络分析</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./交叉滞后网络.html" class="pagination-link">
+        <span class="nav-page-text">交叉滞后网络</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

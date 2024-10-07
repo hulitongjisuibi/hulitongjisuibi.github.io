@@ -1,0 +1,185 @@
+---
+title: "混合变量网络分析"
+format: html
+editor: visual
+---
+
+### 1  简介
+
+如果你想要开展一项基于**混合类型数据**（即包含**连续变量、二分类变量、多分类变量**等不同类型数据）的网络分析，通常需要使用**混合图模型**（Mixed Graphical Models, **MGM**）进行分析。
+
+混合图模型是一种统计模型，用于处理具有不同数据类型的网络结构。它通过组合不同类型的概率分布，来描述连续、二分类、多分类等不同类型的变量之间的相互关系。MGM 在网络分析中非常有用，因为它能够统一处理多种数据类型，并建立它们之间的条件依赖结构。
+
+-   **连续变量**：通常假设服从正态分布，适用于数据类型为实数的数据。
+
+-   **二分类变量**：常见于0/1变量，适用于存在两种可能结果的情况。
+
+-   **多分类变量**：用于处理多个类别（如"红"、"绿"、"蓝"等）的数据。
+
+MGM 的目标是通过正则化技术（如 Lasso）来学习网络中节点之间的稀疏关系，使得网络结构更加清晰并具有解释性。
+
+### 2 R语言实现
+
+R软件包mgm可以轻松搞定混合图模型，这里给个简单的建模演示，并提供一个稳定性检验的思路。
+
+#### 2.1  导入包和数据
+
+导入包：
+
+```{r}
+#| label: load-packages
+#| include: false
+
+
+# 如果没有安装的话，请先安装
+library(mgm)
+library(qgraph)
+library(bootnet)
+library(tidyverse)
+```
+
+导入数据：这里使用一份mgm自带的数据集，具体含义请?查看帮助文档。
+
+```{r}
+head(autism_data$data) #数据
+autism_data$type  #变量类型
+```
+
+#### 2.2  建模
+
+```{r}
+fit_k2 = mgm(data = autism_data$data,  
+             type = autism_data$type, 
+             level = autism_data$lev, 
+             k = 2) 
+```
+
+提取领接矩阵：
+
+```{r}
+fit_k2$pairwise$wadj
+```
+
+绘制网络图：
+
+```{r}
+qgraph(fit_k2$pairwise$wadj,
+       edge.color = fit_k2$pairwise$edgecolor,
+       layout = "spring",
+       labels =  autism_data$colnames)
+```
+
+#### 2.3  计算中心性
+
+```{r}
+centrality(fit_k2$pairwise$wadj)
+```
+
+```{r}
+centralityPlot(fit_k2$pairwise$wadj)
+```
+
+#### 2.4  边缘精确性分析
+
+关于混合图网络模型到的精确性、差异性和稳定性检验，同样会用到bootnet包。bootnet包支持多种模型算法，但需要设置estimateNetwork封装，且需要设置default。
+
+```{r}
+mgm_net = estimateNetwork(autism_data$data,
+                          type = autism_data$type,
+                          level = autism_data$lev,
+                          default = 'mgm')
+```
+
+```{r}
+print(mgm_net)
+```
+
+绘图：
+
+```{r}
+plot(mgm_net, layout = 'spring')
+```
+
+```{r}
+centralityPlot(mgm_net)
+```
+
+重抽样，为了节约时间，这里仅抽样50次：
+
+```{r}
+set.seed(123)
+boot_results2 = bootnet(mgm_net, nBoots = 50,default = 'mgm',
+                         type = "nonparametric",nCores = 8)
+```
+
+可以把数据存储起来，代码可以这样写的save(boot_results2, file = "mgm_boot_results2_mgm.RData")，我这里就不运行了。
+
+然后，可以通过画图看看边缘估计的精确性：
+
+```{r}
+plot(boot_results2, labels=FALSE, order="sample")
+```
+
+部分边缘的95%CI还是有些宽的（阴影部分）。
+
+#### 2.5  差异性分析
+
+#### 2.5.1  中心性指标
+
+一般会检验强度中心性（Strength），下面的代码检验了各节点的Strength是否有显著差异。
+
+```{r}
+#  节点差异性检验  输出数值
+library(tidyverse)
+res2 = summary(boot_results2) %>% 
+  ungroup %>% 
+  filter(type == "edge") %>% 
+  arrange(-sample)
+res2
+```
+
+可视化看看，结论会更清晰。
+
+```{r}
+# 节点的两两比较，黑色表示显著
+plot(boot_results2, statistics="Strength", plot="difference",order = "mean")
+```
+
+如果你对此图的含义还不清楚，可以回看前面的\"横断面网络\"一节。
+
+#### 2.5.2  边缘比较
+
+```{r}
+plot(boot_results2, "edge", plot = "difference", 
+     onlyNonZero = TRUE, order = "sample")
+```
+
+#### 2.6  稳定性分析
+
+与普通网络分析的方法类似，可以采用案例剔除法+bootstrap进行稳定性分析。bootnet提供了一个好用的接口，但此处需要额外调整下default。
+
+```{r}
+drop_res = bootnet(mgm_net, nBoots = 100, default = "mgm", 
+                  type="case", statistics="all",nCores = 12) #减轻计算负担
+```
+
+求稳定性相关系数：
+
+```{r}
+#计算相关稳定性系数
+corStability(drop_res) 
+```
+
+可以看到，几个重要的指标（强度、预期影响等）的相关稳定性系数都大于0.25，部分指标系数高达0.75，符合最低要求。
+
+绘图可能更为直观一点：
+
+```{r}
+plot(drop_res, statistics="all")
+```
+
+**运行环境：**
+
+```{r}
+sessionInfo()
+```
