@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>症状网络</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./横断面网络.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./基础知识.html">基础知识</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+        <div class="sidebar-tools-collapse">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-collapse-item" href="https://github.com/hulitongjisuibi/hulitongjisuibi.github.io">
+            Source Code
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于本书</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./基础知识.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">基础知识</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">网络分析实战</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./横断面网络.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">横断面网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./网络比较.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">网络比较</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./有调节的网络.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">有调节的网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./交叉滞后网络.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">交叉滞后网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./时间网络分析.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">时间网络分析</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#症状管理与症状科学" id="toc-症状管理与症状科学" class="nav-link active" data-scroll-target="#症状管理与症状科学">1 症状管理与症状科学</a></li>
+  <li><a href="#症状网络" id="toc-症状网络" class="nav-link" data-scroll-target="#症状网络">2 症状网络</a></li>
+  <li><a href="#网络分析基础" id="toc-网络分析基础" class="nav-link" data-scroll-target="#网络分析基础">3 网络分析基础</a></li>
+  <li><a href="#网络结构" id="toc-网络结构" class="nav-link" data-scroll-target="#网络结构">3.1 网络结构</a></li>
+  <li><a href="#网络估计方法" id="toc-网络估计方法" class="nav-link" data-scroll-target="#网络估计方法">3.2 网络估计方法</a></li>
+  <li><a href="#相关指标" id="toc-相关指标" class="nav-link" data-scroll-target="#相关指标">3.3 相关指标</a></li>
+  <li><a href="#症状网络常见分类" id="toc-症状网络常见分类" class="nav-link" data-scroll-target="#症状网络常见分类">3.4 症状网络常见分类</a></li>
+  <li><a href="#小结与建议" id="toc-小结与建议" class="nav-link" data-scroll-target="#小结与建议">4 小结与建议</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">症状网络</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="症状管理与症状科学" class="level3">
+<h3 class="anchored" data-anchor-id="症状管理与症状科学">1 症状管理与症状科学</h3>
+<p>症状管理是如今护理研究领域的热点之一，随着研究的深入，研究者对症状管理的关注点从既往的单一症状（symptom）、症状群（symptom cluster），逐渐转移到了症状网络层面。一些学者在此基础上提出了症状科学的概念，并进行了完善和补充。</p>
+<p>症状科学是一种新兴的方法，深入探索复杂症状及症状网络、表型特征、生物标志物，以及患者结局背后的生物学、病理生理学和／或基因组学的机制，可以帮助医护工作者更好地了解患者症状的相互作用机制，从而更好地制定更精准的干预。有关症状科学更为全面、准确的阐述，可以看看复旦大学胡雁教授的文章《症状科学的发展及研究趋势》。</p>
+<p>需要注意的是，症状网络分析只是症状科学研究的第一个环节。</p>
+</section>
+<section id="症状网络" class="level3">
+<h3 class="anchored" data-anchor-id="症状网络">2 症状网络</h3>
+<p>通俗理解症状网络，就是利用一种被称为网络分析的技术对诸多症状的关系（或者交互作用）进行计算并可视化。它通过计算一系列指标，让我们了解这些症状的成对关系，寻找核心症状，以便于后续对核心症状进行精准管理和控制。</p>
+<p>症状网络听起来有些”高大上”，但实则也只是网络分析在症状科学中的一种应用，这就意味着，症状网络并不局限于对症状进行分析，任何你感兴趣的研究变量（甚至量表条目），其实都可以将其加入网络，只不过是研究领域有所差异，比如症状网络倾向于分析症状（生理、心理），其他的可能是分析一些社会属性（社会网络分析）。</p>
+<p>所以说，如果你想要对症状网络有个更本质的了解，还需要从网络分析的相关知识学起，而不是拘泥于”症状”本身。</p>
+</section>
+<section id="网络分析基础" class="level3">
+<h3 class="anchored" data-anchor-id="网络分析基础">3 网络分析基础</h3>
+</section>
+<section id="网络结构" class="level3">
+<h3 class="anchored" data-anchor-id="网络结构">3.1 网络结构</h3>
+<p>节点（node）、边（edge）是最基础的网络结构。</p>
+<p>节点就是我们想要分析的变量，也可以是量表的条目，代入症状科学研究场景，每一个节点代表了每一种”症状”。</p>
+<p>边是两个节点之间的关系，连线越粗，关系越密切；颜色表示方向，一般是红色表示负向关系，蓝色表示正向关系，当然这个颜色是可以自己调节的。边分为有向和无向两种，下面就是一张用人格问卷数据拟合的横向网络图，其中的节点是人格问卷的条目，由于是横断面研究数据，所以这里的连线（边）是没有方向的。</p>
+<p>有的网络图还会有一个代表每个节点的可预测性的环，这个我们会在实战中进行演示。</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/症状网络示例.png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+</section>
+<section id="网络估计方法" class="level3">
+<h3 class="anchored" data-anchor-id="网络估计方法">3.2 网络估计方法</h3>
+<p>网络估计算法常根据数据的类型来选择，连续变量采用高斯图模型（GMM），二分类变量采用Ising 模型，不同数据类型混合的话采用混合图模型（MGM）。</p>
+<p>高斯图模型是最常见的图模型，是一种连续的概率图模型，要求数据服从多元正态分布，高斯图的称呼比较多且不统一，看文献时要根据实际情况去判断。</p>
+<p>Ising 模型本质是logistic回归，我看了些资料，发现其只能处理二分类变量，如果是多分类变量，则要使用mgm去估计。</p>
+<p>还有个需要注意的地方，就是我们需要指定数据的输入，即估计相关网络，还是偏相关网络。两者的区别可以通过百度查看，相关就是字面意思，偏相关是指控制了其他变量之后，两个变量之间的关系，在一些场景下，用后者可能更好，尤其是想要做因果推断的时候。</p>
+<p>个人认为，不同类型的网络的最大区别点就在于这个输入数据上面，比如大部分论文作者或者博主推荐使用的网络分析可视化函数（qgraph），是可以接受多种类型数据的。可以这么说，玩懂了这个输入数据，常用的网络分析方法差不多可以通吃了。</p>
+</section>
+<section id="相关指标" class="level3">
+<h3 class="anchored" data-anchor-id="相关指标">3.3 相关指标</h3>
+<p>做症状网络研究或者其他领域的网络分析，除了想要了解不同节点之间的关系之外，通常想要计算出哪些节点的影响力最大或者最重要。</p>
+<p>一些常用的算法会将比较重要的节点或者关联比较密切的节点对放在网络比较中心的位置，但不同算法下节点的位置可能有不同的含义，不能仅仅根据图的位置来判断重要的节点，所以需要结合一些特异性指标来判断，例如节点指标（中心性）、网络层面指标，以及准确性、稳定性、差异性分析等。</p>
+<p><strong>3.3.1 节点指标</strong></p>
+<p>节点指标包括中心性、预期影响系数、可预测性等。</p>
+<p>①中心性指标可以用于量化节点的重要程度，数值越大代表节点在整个网络中的重要性越高，包括强度（strength）、紧密性（closeness） 、 中介（betweenness）三种。</p>
+<p>强度中心性：与一个节点相连所有边的权重之和，是最重要的中心性指标。</p>
+<p>紧密中心性：一个节点到达网络中所有其他节点的最短路径的平均长度的倒数，这个用得不多。</p>
+<p>中介中心性：一个节点在网络中所有最短路径中出现的频率，这个用得不多。</p>
+<p>②预期影响系数：是一种类似强度中心性的量化节点影响力的指标，同时考虑正负相关，这个用得多。</p>
+<p>③可预测性：节点受其他节点影响的程度，本质是回归分析中的R2，这个用得多。</p>
+<p><strong>3.3.2 准确性、稳定性、差异性分析</strong></p>
+<p>仅一次网络估计是很难说得到的网络是否科学的，所以需要通过bootstrap（自助重抽样）方法对其进行准确性、稳定性检验，根据研究目的可能还会对各节点和边进行差异性分析。</p>
+<p>①准确性分析通常是针对边（edge）的，通过计算95%的CI来判断其准确性，当然这里不是通过是否包含0来判断，而是根据其CI是”宽”还是”窄”来判断。bootstrap法分为参数bootstrap或者非参数bootstrap，顾名思义，前者是对估计出来的参数进行重抽样，后者是对原数据进行重抽样。在网络分析中，通常选择非参数bootstrap。</p>
+<p>②稳定性分析是针对中心性的，有点类似于我们做临床研究时的敏感性分析，这里通常会采用剔除法评估中心性指标的稳定性，包括case剔除以及node剔除。通常不会选择节点剔除，因为我们不知道哪个节点是重要的。case剔除就是减少样本量，通过不断重复计算中心性，然后估计相关稳定性系数（CS系数）来评估稳定程度。一般要求CS&gt;0.5。</p>
+<p>③差异性分析：得到一份准确、稳定的网络之后，我们可能对一些核心节点（症状）、边进行比较，同样的是采用bootstrap法，通过重抽样构建指标的置信区间（与0比较）进行判断。</p>
+<p>值得注意的是，不同的网络也是可以比较的，比如要分析性别对某个症状网络的影响，除了把它当做协变量纳入之外，还可以尝试分别构建男性网络和女性网络，然后采用统计检验的方法进行比较（NCT）。NCT分别检验了3种假设：结构不变性、强度不变性和边不变性。这个同样会在后续的内容中进行实战演示。</p>
+<p><strong>3.3.3 网络层面指标</strong></p>
+<p>包括网络密度（density）和连通性（Connectivity）。</p>
+<p>①网络密度代表了网络中实际存在的连接（边）与所有可能的连接（边）之间的比例。网络密度可以被视为网络的”紧密程度”或”联结程度”的指标。范围是0-1，单一使用的作用一般不大。</p>
+<p>②网络连通性描述了网络中节点之间的相互连接程度，在症状网络中，高连通性意味着症状彼此容易影响。</p>
+</section>
+<section id="症状网络常见分类" class="level3">
+<h3 class="anchored" data-anchor-id="症状网络常见分类">3.4 症状网络常见分类</h3>
+<p>分类是需要参照物的，当考虑的角度不同时，可能会有多种不同的分类方法。所以症状网络的类型说不准的。</p>
+<p>按照复旦大学朱政教授研究团队的分类：症状网络可以分为同期网络、动态网络、个体化网络（根据数据类型）。其提到同期网络用于横断面研究，但其实向量自回归模型也可以分解出同期网络模型来。动态网络定义也过于宽泛。</p>
+<p>我个人推荐根据研究设计和算法来分：横断面网络、纵向网络；纵向网络可能还可以细分为交叉滞后网络模型、时变网络模型，等等。这些模型采取的算法与前面提到的可能有些差异，会分散在实战中进行解释。</p>
+</section>
+<section id="小结与建议" class="level3">
+<h3 class="anchored" data-anchor-id="小结与建议">4 小结与建议</h3>
+<p>症状网络对我们从生理学机制解读疾病症状、开展精准护理很有帮助，有助于理解多因多果，发展很快，从横向发展到了纵向。症状网络分析的本质是网络分析，通常涉及到数据类型、统计方法、相关指标的选择和计算。</p>
+<p>学习建议：如果你有网络模型相关的进阶需求，症状网络的教程不多，强烈建议从网络分析相关技术入手。</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">关于本书</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./横断面网络.html" class="pagination-link">
+        <span class="nav-page-text">横断面网络</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

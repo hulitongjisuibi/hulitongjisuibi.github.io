@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>时间网络分析</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./协变量处理方法.html" rel="next">
+<link href="./交叉滞后网络.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./横断面网络完整版.html">网络分析实战</a></li><li class="breadcrumb-item"><a href="./时间网络分析.html">时间网络分析</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+        <div class="sidebar-tools-collapse">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-collapse-item" href="https://github.com/hulitongjisuibi/hulitongjisuibi.github.io">
+            Source Code
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于本书</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./网络分析基础及指标.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">网络分析基础及指标</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">网络分析实战</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./横断面网络完整版.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">横断面网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./不同网络比较.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">不同网络比较</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./二分类变量网络分析.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">二分类变量的网络分析</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./混合变量网络分析.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">混合变量网络分析</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./有调节的网络.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">有调节的网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./交叉滞后网络.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">交叉滞后网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./时间网络分析.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">时间网络分析</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./协变量处理方法.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">协变量处理方法</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./样本量估算.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">样本量估算</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./参考文献.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">参考文献</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#时间网络分析概述" id="toc-时间网络分析概述" class="nav-link active" data-scroll-target="#时间网络分析概述">1 时间网络分析概述</a>
+  <ul class="collapse">
+  <li><a href="#r语言实战" id="toc-r语言实战" class="nav-link" data-scroll-target="#r语言实战">2 R语言实战</a></li>
+  <li><a href="#几个需要注意的地方" id="toc-几个需要注意的地方" class="nav-link" data-scroll-target="#几个需要注意的地方">3 几个需要注意的地方</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">时间网络分析</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="时间网络分析概述" class="level2">
+<h2 class="anchored" data-anchor-id="时间网络分析概述">1 时间网络分析概述</h2>
+<section id="几种数据类型" class="level4">
+<h4 class="anchored" data-anchor-id="几种数据类型">1.1 几种数据类型</h4>
+<p>首先，从测量次数角度，我们要注意区分几种数据类型：单一测量数据（每人一个测量）、面板数据（许多人测量了几次）、N = 1时间序列数据（一个人测量了多次）和N &gt; 1时间序列数据（几个人测量了多次）。</p>
+</section>
+<section id="时间网络分析" class="level4">
+<h4 class="anchored" data-anchor-id="时间网络分析">1.2 时间网络分析</h4>
+<p>时间网络分析（Temporal network analysis）是网络分析的最新进展之一，它将关系和时间维度结合到一个单一的分析框架中，即：时间网络，也称为时间序列网络、时变网络、动态网络或演化网络。</p>
+<p>时间网络分析是一种新颖而具有前景的方法，它比其他更常用的纵向建模技术[如交叉滞后面板模型(CLPM)，回归模型]具有优势。</p>
+<p>首先，时态网络分析中经常涉及到建立图形向量自回归(GVAR)模型，其允许估计考虑时间上个体内差异的有向网络，而CLPM没有分离个体内效应（within-person effects）和个体间效应（between-person effects），这可能导致变量之间因果关系的不正确结论。尽管后来发展起来的CLPM ——随机截距 CLPM可以将时间不变（time-invariant）、类似特质（trait-like）的个体间效应与个体内效应区分开来，但它需要更大的样本和更大的检验效能，特别是对于具有更多变量的更复杂的模型。</p>
+<p><img src="images/几种效应设计图.png" class="img-fluid">{引用自WITH R NETWORK PSYCHOMETRICS=“” fig-align=“center”}</p>
+<p>其次，时间网络分析评估模型中每个变量的中心性，这可以识别网络中最重要的(或最有影响力的)节点。由于高度中心的节点影响网络中最多的变量，因此它们可能是干预的有用目标。</p>
+</section>
+<section id="分析思路" class="level4">
+<h4 class="anchored" data-anchor-id="分析思路">1.3 分析思路</h4>
+<p>时间网络分析还在发展之中，并不完善。对于N=1的时间序列网络分析，主要思想是通图形向量自回归模型（GVAR）进行处理；对于N&gt;1的时间序列，可能会更多地考虑多层VAR（mlVAR包实现了这种统计建模方法）。</p>
+<p>在VAR中，在连续的时间点之间使用线性回归来建模时间依赖关系，允许人们在控制了时间效应（同期效应）后，获得跨时间的关系（时间效应）和同一测量窗口中的关系的单独估计。VAR变体是这一部分的核心焦点是图形VAR（GVAR）模型，其中同时的效果被进一步建模为高斯图形模型。因此，GVAR模型返回两种网络结构：一个时间网络，这是一个时间关系的有向网络；一个同时网络，它是一个同时关系的无向网络。</p>
+</section>
+<section id="工具包" class="level4">
+<h4 class="anchored" data-anchor-id="工具包">1.4 工具包</h4>
+<p>可以实现上述几种时间序列数据网络分析的R包有多种，目前来看并不统一，单是我在各类文献中看到的工具包就不少，比如，有用<a href="https://link.springer.com/chapter/10.1007/978-3-031-54464-4_17#Sec6">时间社会网络分析（tsna）</a>的，有用多水平向量自回归(<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7530190/">mlVAR包</a>，Multi-Level Vector Autoregression)的，也有用<a href="https://mental.jmir.org/2024/1/e50136">时变向量自回归包（mgm包）</a>以及<a href="https://www.researchgate.net/publication/374951207_Peer_functioning_difficulties_may_exacerbate_symptoms_of_attention-deficithyperactivity_disorder_and_irritability_over_time_a_temporal_network_analysis?enrichId=rgreq-a67fefe7d73659d604617e894336fc35-XXX&amp;enrichSource=Y292ZXJQYWdlOzM3NDk1MTIwNztBUzoxMTQzMTI4MTIwMTIwMzk2OEAxNjk4MjQ3Nzg1NTQz&amp;el=1_x_3&amp;_esc=publicationCoverPdf">psychonetrics包（面板GVAR模型）</a>……</p>
+<p>虽然让人眼花缭乱，但底层逻辑是相似的，主要还是要看你的研究类型和目的。譬如，mlVAR会分离出以下三种网络：</p>
+<p><img src="images/时间序列---三种网络.png" class="img-fluid">{引用自WITH R NETWORK PSYCHOMETRICS=“” fig-align=“center”}</p>
+<p>我在上述对应R包的名字上附上了具体文献或者代码仓库的超链接，你如果感兴趣的话，可以点进去看看这些文献对Temporal network analysis的具体实现方法。</p>
+<p>个人比较推荐使用<strong>mlVAR</strong>构建时间序列网络模型。</p>
+</section>
+<section id="r语言实战" class="level3">
+<h3 class="anchored" data-anchor-id="r语言实战">2 R语言实战</h3>
+<section id="准备数据" class="level4">
+<h4 class="anchored" data-anchor-id="准备数据">2.1 准备数据</h4>
+<p>为了避免版本兼容性问题，大家可以先跳转到文末看看我使用的R语言环境。</p>
+<p>先导入需要使用的程序包，没有安装的请先安装。</p>
+<p>本次我们用mlVAR包的mlVARsim函数模拟一份数据(实际是拟合也了一个时间网络模型)，为了减轻电脑的计算负担，设置受试者人数为50，节点数为8个，测量次数是30，阶数lag为1，其它都是默认设置。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Model <span class="ot">=</span> <span class="fu">mlVARsim</span>(<span class="at">nPerson =</span> <span class="dv">50</span>,<span class="at">nNode =</span> <span class="dv">8</span>, <span class="at">nTime =</span> <span class="dv">30</span>, <span class="at">lag=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>查看数据：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Model<span class="sc">$</span>Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         V1       V2        V3        V4        V5         V6         V7
+1 2.0335217 3.157925 -3.876432 -4.733132 -2.543258 -0.6276040  1.4945052
+2 2.2822126 3.732587 -4.179065 -1.685546 -2.404072  1.7619746 -0.1781815
+3 1.5409651 2.615361 -2.934132 -3.383525 -1.873246  2.5694409 -3.4722245
+4 0.6782198 3.847820 -1.470588 -5.984845 -2.705544  1.5355441 -0.9820712
+5 3.8371249 3.970785 -1.777491 -2.959565 -3.943941  0.5437959 -1.6252762
+6 3.0328899 1.786133 -1.560092 -1.860449 -2.511397  2.1500955  1.1310869
+         V8 ID
+1 -8.729056  1
+2 -7.772314  1
+3 -6.317016  1
+4 -6.868845  1
+5 -6.163121  1
+6 -5.477314  1</code></pre>
+</div>
+</div>
+<p>查看节点名：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Model<span class="sc">$</span>vars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "V1" "V2" "V3" "V4" "V5" "V6" "V7" "V8"</code></pre>
+</div>
+</div>
+<p>查看受试者变量：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Model<span class="sc">$</span>idvar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ID"</code></pre>
+</div>
+</div>
+<p>绘图：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="拟合模型" class="level4">
+<h4 class="anchored" data-anchor-id="拟合模型">2.2 拟合模型</h4>
+<p>好戏开始：用mlVAR函数拟合时间网络模型！</p>
+<p>这里面的data、vars、idvar是必须写的，分别表示数据、要分析的变量名、代表受试者的变量。lags可以选用默认参数，estimator是估计器，具体的选项可以查看帮助文档，这里选择lmer；contemporaneous（同期网络）、temporal（时序网络）估计方法都采用”correlated”；nCores指定使用的cpu核心数，计算量不小，可以适当大一些。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">mlVAR</span>(<span class="at">data =</span> Model<span class="sc">$</span>Data, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">vars =</span> Model<span class="sc">$</span>vars, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">idvar =</span> Model<span class="sc">$</span>idvar, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">lags =</span> <span class="dv">1</span>, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">estimator =</span> <span class="st">"lmer"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">temporal =</span> <span class="st">"correlated"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">contemporaneous =</span> <span class="st">"correlated"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">nCores =</span> <span class="dv">8</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">verbose =</span>F</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>总结模型：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+mlVAR estimation completed. Input was:
+    - Variables: V1 V2 V3 V4 V5 V6 V7 V8 
+    - Lags: 1 
+    - Estimator: lmer 
+    - Temporal: correlated
+
+Information indices:
+ var      aic      bic
+  V1 3199.817 3527.135
+  V2 2934.493 3261.810
+  V3 3112.823 3440.141
+  V4 2840.875 3168.193
+  V5 2705.464 3032.781
+  V6 2985.371 3312.689
+  V7 3090.526 3417.844
+  V8 2959.122 3286.440
+
+
+Temporal effects:
+ from to lag  fixed    SE     P ran_SD
+   V1 V1   1  0.116 0.029 0.000  0.078
+   V1 V2   1  0.175 0.027 0.000  0.090
+   V1 V3   1 -0.515 0.041 0.000  0.216
+   V1 V4   1 -0.441 0.030 0.000  0.120
+   V1 V5   1  0.005 0.033 0.890  0.162
+   V1 V6   1  0.362 0.028 0.000  0.083
+   V1 V7   1  0.269 0.030 0.000  0.102
+   V1 V8   1  0.035 0.041 0.394  0.229
+   V2 V1   1  0.032 0.042 0.449  0.242
+   V2 V2   1  0.132 0.036 0.000  0.199
+   V2 V3   1  0.309 0.032 0.000  0.154
+   V2 V4   1  0.140 0.031 0.000  0.154
+   V2 V5   1  0.037 0.032 0.250  0.174
+   V2 V6   1 -0.384 0.039 0.000  0.229
+   V2 V7   1 -0.285 0.036 0.000  0.196
+   V2 V8   1  0.048 0.034 0.154  0.182
+   V3 V1   1  0.027 0.030 0.372  0.102
+   V3 V2   1  0.004 0.027 0.886  0.084
+   V3 V3   1  0.117 0.032 0.000  0.134
+   V3 V4   1  0.167 0.035 0.000  0.178
+   V3 V5   1 -0.265 0.025 0.000  0.082
+   V3 V6   1 -0.023 0.029 0.425  0.105
+   V3 V7   1 -0.038 0.027 0.159  0.064
+   V3 V8   1  0.332 0.029 0.000  0.109
+   V4 V1   1  0.050 0.036 0.168  0.180
+   V4 V2   1 -0.181 0.036 0.000  0.198
+   V4 V3   1 -0.022 0.039 0.573  0.208
+   V4 V4   1  0.255 0.039 0.000  0.224
+   V4 V5   1  0.184 0.038 0.000  0.219
+   V4 V6   1  0.161 0.038 0.000  0.208
+   V4 V7   1 -0.239 0.043 0.000  0.248
+   V4 V8   1  0.138 0.038 0.000  0.208
+   V5 V1   1 -0.022 0.029 0.448  0.106
+   V5 V2   1  0.392 0.026 0.000  0.077
+   V5 V3   1 -0.131 0.029 0.000  0.101
+   V5 V4   1 -0.024 0.026 0.351  0.088
+   V5 V5   1  0.055 0.028 0.049  0.122
+   V5 V6   1  0.027 0.030 0.369  0.129
+   V5 V7   1  0.043 0.031 0.162  0.134
+   V5 V8   1 -0.041 0.025 0.092  0.053
+   V6 V1   1 -0.023 0.033 0.492  0.141
+   V6 V2   1 -0.039 0.046 0.394  0.271
+   V6 V3   1  0.098 0.038 0.009  0.187
+   V6 V4   1 -0.066 0.034 0.055  0.170
+   V6 V5   1  0.167 0.040 0.000  0.227
+   V6 V6   1  0.009 0.040 0.820  0.212
+   V6 V7   1 -0.105 0.039 0.007  0.201
+   V6 V8   1 -0.018 0.039 0.639  0.211
+   V7 V1   1 -0.012 0.034 0.731  0.155
+   V7 V2   1 -0.016 0.027 0.554  0.092
+   V7 V3   1  0.019 0.035 0.582  0.168
+   V7 V4   1  0.251 0.029 0.000  0.119
+   V7 V5   1  0.183 0.026 0.000  0.097
+   V7 V6   1 -0.042 0.027 0.126  0.094
+   V7 V7   1  0.031 0.027 0.253  0.071
+   V7 V8   1  0.253 0.026 0.000  0.071
+   V8 V1   1 -0.072 0.042 0.087  0.226
+   V8 V2   1 -0.432 0.037 0.000  0.192
+   V8 V3   1  0.138 0.042 0.001  0.232
+   V8 V4   1 -0.027 0.040 0.493  0.219
+   V8 V5   1  0.219 0.038 0.000  0.216
+   V8 V6   1 -0.033 0.039 0.393  0.211
+   V8 V7   1  0.202 0.038 0.000  0.197
+   V8 V8   1  0.137 0.040 0.001  0.220
+
+
+Contemporaneous effects (posthoc estimated):
+ v1 v2 P 1-&gt;2 P 1&lt;-2   pcor ran_SD_pcor    cor ran_SD_cor
+ V2 V1  0.000  0.000 -0.255       0.218 -0.237      0.243
+ V3 V1  0.761  0.999 -0.006       0.171 -0.031      0.186
+ V3 V2  0.351  0.302  0.042       0.184 -0.116      0.185
+ V4 V1  0.000  0.000  0.224       0.169  0.263      0.232
+ V4 V2  0.771  0.861  0.009       0.172 -0.039      0.218
+ V4 V3  0.451  0.683 -0.022       0.141 -0.063      0.204
+ V5 V1  0.013  0.002 -0.124       0.209 -0.060      0.236
+ V5 V2  0.000  0.000  0.194       0.203  0.275      0.217
+ V5 V3  0.000  0.000 -0.264       0.189 -0.335      0.219
+ V5 V4  0.000  0.000  0.182       0.239  0.193      0.286
+ V6 V1  0.000  0.000  0.177       0.084  0.060      0.172
+ V6 V2  0.000  0.000  0.287       0.215  0.306      0.212
+ V6 V3  0.000  0.000 -0.270       0.140 -0.321      0.146
+ V6 V4  0.000  0.001 -0.147       0.165 -0.108      0.234
+ V6 V5  0.038  0.005  0.089       0.131  0.214      0.188
+ V7 V1  0.104  0.161  0.063       0.173  0.204      0.165
+ V7 V2  0.610  0.653  0.020       0.171 -0.017      0.239
+ V7 V3  0.738  0.273 -0.026       0.137 -0.059      0.206
+ V7 V4  0.000  0.000  0.310       0.169  0.404      0.200
+ V7 V5  0.847  0.588 -0.006       0.156  0.131      0.267
+ V7 V6  0.008  0.013 -0.090       0.117 -0.078      0.157
+ V8 V1  0.000  0.000  0.166       0.146  0.220      0.171
+ V8 V2  0.406  0.858  0.023       0.189  0.047      0.284
+ V8 V3  0.954  0.405 -0.015       0.142 -0.124      0.216
+ V8 V4  0.586  0.979  0.010       0.123  0.230      0.206
+ V8 V5  0.000  0.000  0.202       0.125  0.260      0.207
+ V8 V6  0.311  0.312  0.039       0.153  0.075      0.227
+ V8 V7  0.000  0.000  0.344       0.149  0.414      0.163
+
+
+Between-subject effects:
+ v1 v2 P 1-&gt;2 P 1&lt;-2   pcor    cor
+ V2 V1  0.282  0.811  0.080  0.155
+ V3 V1  0.038  0.067  0.240  0.251
+ V3 V2  0.958  0.467 -0.042  0.047
+ V4 V1  0.122  0.295  0.164  0.126
+ V4 V2  0.707  0.322  0.091  0.172
+ V4 V3  0.418  0.238 -0.131 -0.117
+ V5 V1  0.264  0.142 -0.161 -0.047
+ V5 V2  0.085  0.001  0.306  0.185
+ V5 V3  0.276  0.252  0.142  0.155
+ V5 V4  0.121  0.187 -0.187 -0.345
+ V6 V1  0.003  0.001  0.370  0.317
+ V6 V2  0.128  0.713  0.122  0.057
+ V6 V3  0.312  0.756  0.044  0.161
+ V6 V4  0.311  0.704 -0.091 -0.244
+ V6 V5  0.240  0.120  0.172  0.304
+ V7 V1  0.132  0.183 -0.179 -0.121
+ V7 V2  0.396  0.486  0.100  0.083
+ V7 V3  0.334  0.764  0.081 -0.038
+ V7 V4  0.036  0.036  0.261  0.349
+ V7 V5  0.177  0.072 -0.198 -0.280
+ V7 V6  0.290  0.685 -0.039 -0.215
+ V8 V1  0.312  0.134  0.148  0.139
+ V8 V2  0.001  0.001  0.378  0.362
+ V8 V3  0.326  0.624  0.090  0.027
+ V8 V4  0.121  0.029  0.225  0.407
+ V8 V5  0.127  0.399 -0.146 -0.239
+ V8 V6  0.000  0.017 -0.340 -0.344
+ V8 V7  0.902  0.974 -0.006  0.188</code></pre>
+</div>
+</div>
+<p>上面给出了大量的信息。值得注意的是，mlVAR包会输出3种效应：Temporal effects、Contemporaneous effects、Between-subject effects，分别对应时序网络、同期网络和个体间网络。</p>
+<ul>
+<li><p><strong>Temporal effects（时间效应）</strong>：这是指变量在时间上对自身或其它变量的影响，这些效应通常是通过滞后回归权重来估计的，可以捕捉变量随时间的动态关系 。时序网络中的边是指变量在上个时间点t-1对下个时间点t的各节点的预测能力（控制了上个时间点t-1上的其他变量之后）。</p></li>
+<li><p><strong>Contemporaneous effects（同期效应）</strong>：这是指在相同时间点上变量之间的关系，可以是简单的相关关系或偏相关关系。这些关系通常是通过模型残差的相互关系来估计的，可以揭示在同一时间点上变量之间的直接联系 。</p></li>
+<li><p><strong>Between-subject effects（个体间效应）</strong>：这是指在不同个体之间（平均水平层面的）变量关系的差异，可以是相关关系或偏相关关系。这些效应反映了不同个体在变量关系上的差异，有助于理解不同个体在心理过程上的差异 。</p></li>
+</ul>
+</section>
+<section id="可视化" class="level4">
+<h4 class="anchored" data-anchor-id="可视化">2.3 可视化</h4>
+<p>我们可以分别绘制这些网络图：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 同期网络</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>contemporaneous <span class="ot">=</span> <span class="fu">plot</span>(fit1, <span class="at">type =</span> <span class="st">"temporal"</span>, <span class="at">title =</span> <span class="st">"Estimated temporal relationships"</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">rule =</span> <span class="st">"and"</span>,<span class="at">layout =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>'nonsig' argument set to: 'hide'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 时序网络</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>temporal<span class="ot">=</span><span class="fu">plot</span>(fit1, <span class="at">type =</span> <span class="st">"contemporaneous"</span>, <span class="at">rule =</span> <span class="st">"and"</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">title =</span> <span class="st">"Estimated contemporaneous relationships"</span>, <span class="at">layout =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>'nonsig' argument set to: 'hide'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 受试者间网络  必须取名between，否则报错</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>between <span class="ot">=</span> <span class="fu">plot</span>(fit1, <span class="at">type =</span> <span class="st">"between"</span>, <span class="at">rule =</span> <span class="st">"or"</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">title =</span> <span class="st">"Estimated between relationships"</span>, <span class="at">layout =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>'nonsig' argument set to: 'hide'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="计算中心性" class="level4">
+<h4 class="anchored" data-anchor-id="计算中心性">2.4 计算中心性</h4>
+<p>可以跟横断面网络一样，计算或者开展后续一些常用的指标和检验，比如中心性，桥梁症状。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算中心性</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">centrality</span>(contemporaneous)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$OutDegree
+       V1        V2        V3        V4        V5        V6        V7        V8 
+1.7626296 1.1175046 0.7645637 0.9034969 0.5231023 0.3698123 0.6865014 0.9912068 
+
+$InDegree
+       V1        V2        V3        V4        V5        V6        V7        V8 
+0.0000000 1.1805817 1.1909310 0.9991603 1.0172301 0.9069345 1.1013387 0.7226413 
+
+$Closeness
+        V1         V2         V3         V4         V5         V6         V7 
+0.03696362 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+        V8 
+0.00000000 
+
+$Betweenness
+V1 V2 V3 V4 V5 V6 V7 V8 
+ 0 11  6  0  1  0  2  6 
+
+$InExpectedInfluence
+         V1          V2          V3          V4          V5          V6 
+ 0.00000000 -0.04617963 -0.10094765  0.11654432  0.48700373  0.13880776 
+         V7          V8 
+-0.15752989  0.72264128 
+
+$OutExpectedInfluence
+         V1          V2          V3          V4          V5          V6 
+-0.14918637 -0.22089092  0.23433731  0.06198312  0.26042372  0.16018255 
+         V7          V8 
+ 0.68650135  0.12698916 
+
+$ShortestPathLengths
+    V1       V2        V3        V4       V5       V6       V7        V8
+V1   0 5.700019  1.943257  2.265991 5.715231 2.763749 3.711177  4.954201
+V2 Inf 0.000000  3.238940  7.165181 7.010914 2.603737 3.507118  6.249884
+V3 Inf 5.325176  0.000000  5.976258 3.771974 7.928913 7.950482  3.010944
+V4 Inf 5.516577  8.755517  0.000000 5.430191 6.209490 4.175626  7.270580
+V5 Inf 2.552564  5.791503  9.717744 0.000000 5.156301 6.059682  8.802448
+V6 Inf 8.558272 10.153397 13.525333 6.005709 0.000000 9.540629 13.164342
+V7 Inf 6.267130  9.506069  3.984703 5.477571 8.870867 0.000000  3.952898
+V8 Inf 2.314232  5.553172  8.924241 4.568496 4.917969 4.939537  0.000000
+
+$ShortestPaths
+   V1   V2   V3   V4   V5   V6   V7   V8  
+V1 NULL NULL NULL NULL NULL NULL NULL NULL
+V2 NULL NULL NULL NULL NULL NULL NULL NULL
+V3 NULL NULL NULL NULL NULL NULL NULL NULL
+V4 NULL NULL NULL NULL NULL NULL NULL NULL
+V5 NULL NULL NULL NULL NULL NULL NULL NULL
+V6 NULL NULL NULL NULL NULL NULL NULL NULL
+V7 NULL NULL NULL NULL NULL NULL NULL NULL
+V8 NULL NULL NULL NULL NULL NULL NULL NULL</code></pre>
+</div>
+</div>
+<p>可以将其绘制出来，下面的代码依次绘制同期网络、时序网络和个体间网络。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(contemporaneous) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(temporal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(between)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>完全可以对绘图函数的参数做些个性化调整，这里不多展示了。</p>
+</section>
+<section id="桥梁症状分析" class="level4">
+<h4 class="anchored" data-anchor-id="桥梁症状分析">2.5 桥梁症状分析</h4>
+<p>先人为对模拟数据的节点进行分组：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>groups<span class="ot">=</span><span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'A'</span>,<span class="dv">4</span>),<span class="fu">rep</span>(<span class="st">'B'</span>,<span class="dv">2</span>),<span class="fu">rep</span>(<span class="st">'C'</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>计算桥梁中心性指标：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> <span class="fu">bridge</span>(contemporaneous, <span class="at">communities=</span> groups, <span class="at">directed=</span>F)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$`Bridge Strength`
+       V1        V2        V3        V4        V5        V6        V7        V8 
+0.6312836 0.6691977 0.5972349 0.7222251 0.5231023 0.2033041 0.4335224 0.7887587 
+
+$`Bridge Betweenness`
+V1 V2 V3 V4 V5 V6 V7 V8 
+ 5  1  1  5  0  1  2  3 
+
+$`Bridge Closeness`
+        V1         V2         V3         V4         V5         V6         V7 
+0.14014223 0.10893181 0.12090457 0.13274157 0.08197854 0.13031448 0.11021654 
+        V8 
+0.12678535 
+
+$`Bridge Expected Influence (1-step)`
+          V1           V2           V3           V4           V5           V6 
+ 0.631283628 -0.669197749  0.067008531  0.243254960  0.260423716 -0.006325689 
+          V7           V8 
+ 0.433522386 -0.075458952 
+
+$`Bridge Expected Influence (2-step)`
+         V1          V2          V3          V4          V5          V6 
+ 0.51172975 -0.76244179  0.24764776  0.32814244  0.25875117  0.03340721 
+         V7          V8 
+ 0.50311573  0.02808020 
+
+$communities
+[1] "A" "A" "A" "A" "B" "B" "C" "C"</code></pre>
+</div>
+</div>
+<p>简单绘图：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(b, <span class="at">include=</span><span class="fu">c</span>(<span class="st">"Bridge Expected Influence (2-step)"</span>, <span class="st">"Bridge Strength"</span>, <span class="st">"Bridge Closeness"</span>),</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">theme_bw=</span>F, <span class="at">raw0 =</span> T, <span class="at">signed=</span>T) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Vectorized input to `element_text()` is not officially supported.
+ℹ Results may be unexpected or may change in future versions of ggplot2.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="几个需要注意的地方" class="level3">
+<h3 class="anchored" data-anchor-id="几个需要注意的地方">3 几个需要注意的地方</h3>
+<p>时间网络分析目前还不完善，上述流程并没有覆盖到之前我们做横断面网络的所有评估指标和检验方法，比如稳定性、精确性、差异性检验，我还没有找到合适的R包可以很方便地对其进行分析（估计得自己写重抽样代码）。</p>
+<p>此外，时间网络分析不同于CLPM网络分析，其对数据有一些要求，比如说测量次数多、满足多元正态分布、具备平稳性……</p>
+<p>你如果有一份生态瞬时数据或者密集追踪数据，且想要进行时间网络分析，建议在建模前检查下数据，包括正态性（不服从也可以做）、平稳性（KPSS平稳性检验，文献提到可以用R包tseries实现，要一个个做，所以代码有些复杂），等等。</p>
+<section id="运行环境" class="level4">
+<h4 class="anchored" data-anchor-id="运行环境"><strong>运行环境</strong></h4>
+<p><code>{r}</code></p>
+<p><code>sessionInfo()}</code></p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./交叉滞后网络.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">交叉滞后网络</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./协变量处理方法.html" class="pagination-link">
+        <span class="nav-page-text">协变量处理方法</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>混合变量网络分析</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./有调节的网络.html" rel="next">
+<link href="./二分类变量网络分析.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./横断面网络完整版.html">网络分析实战</a></li><li class="breadcrumb-item"><a href="./混合变量网络分析.html">混合变量网络分析</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+        <div class="sidebar-tools-collapse">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-collapse-item" href="https://github.com/hulitongjisuibi/hulitongjisuibi.github.io">
+            Source Code
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于本书</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./网络分析基础及指标.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">网络分析基础及指标</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">网络分析实战</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./横断面网络完整版.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">横断面网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./不同网络比较.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">不同网络比较</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./二分类变量网络分析.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">二分类变量的网络分析</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./混合变量网络分析.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">混合变量网络分析</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./有调节的网络.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">有调节的网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./交叉滞后网络.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">交叉滞后网络</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./时间网络分析.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">时间网络分析</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./协变量处理方法.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">协变量处理方法</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./样本量估算.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">样本量估算</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#简介" id="toc-简介" class="nav-link active" data-scroll-target="#简介">1 简介</a></li>
+  <li><a href="#r语言实现" id="toc-r语言实现" class="nav-link" data-scroll-target="#r语言实现">2 R语言实现</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">混合变量网络分析</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="简介" class="level3">
+<h3 class="anchored" data-anchor-id="简介">1 简介</h3>
+<p>如果你想要开展一项基于<strong>混合类型数据</strong>（即包含<strong>连续变量、二分类变量、多分类变量</strong>等不同类型数据）的网络分析，通常需要使用<strong>混合图模型</strong>（Mixed Graphical Models, <strong>MGM</strong>）进行分析。</p>
+<p>混合图模型是一种统计模型，用于处理具有不同数据类型的网络结构。它通过组合不同类型的概率分布，来描述连续、二分类、多分类等不同类型的变量之间的相互关系。MGM 在网络分析中非常有用，因为它能够统一处理多种数据类型，并建立它们之间的条件依赖结构。</p>
+<ul>
+<li><p><strong>连续变量</strong>：通常假设服从正态分布，适用于数据类型为实数的数据。</p></li>
+<li><p><strong>二分类变量</strong>：常见于0/1变量，适用于存在两种可能结果的情况。</p></li>
+<li><p><strong>多分类变量</strong>：用于处理多个类别（如”红”、“绿”、“蓝”等）的数据。</p></li>
+</ul>
+<p>MGM 的目标是通过正则化技术（如 Lasso）来学习网络中节点之间的稀疏关系，使得网络结构更加清晰并具有解释性。</p>
+</section>
+<section id="r语言实现" class="level3">
+<h3 class="anchored" data-anchor-id="r语言实现">2 R语言实现</h3>
+<p>R软件包mgm可以轻松搞定混合图模型，这里给个简单的建模演示，并提供一个稳定性检验的思路。</p>
+<section id="导入包和数据" class="level4">
+<h4 class="anchored" data-anchor-id="导入包和数据">2.1 导入包和数据</h4>
+<p>导入包：</p>
+<p>导入数据：这里使用一份mgm自带的数据集，具体含义请?查看帮助文档。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(autism_data<span class="sc">$</span>data) <span class="co">#数据</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Gender   IQ Integration in Society No of Comorbidities Type of Housing
+[1,]      1 6.00                      1                   1               1
+[2,]      2 6.00                      2                   1               1
+[3,]      1 5.00                      2                   0               1
+[4,]      1 6.00                      1                   0               1
+[5,]      1 5.00                      1                   1               1
+[6,]      1 4.49                      1                   1               1
+     Workinghours Satisfaction: Treatment
+[1,]            0                    3.00
+[2,]            0                    2.00
+[3,]            0                    4.00
+[4,]           10                    3.00
+[5,]            0                    1.00
+[6,]            0                    1.75</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>autism_data<span class="sc">$</span>type  <span class="co">#变量类型</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "c" "g" "c" "p" "c" "g" "g"</code></pre>
+</div>
+</div>
+</section>
+<section id="建模" class="level4">
+<h4 class="anchored" data-anchor-id="建模">2.2 建模</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fit_k2 <span class="ot">=</span> <span class="fu">mgm</span>(<span class="at">data =</span> autism_data<span class="sc">$</span>data,  </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">type =</span> autism_data<span class="sc">$</span>type, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">level =</span> autism_data<span class="sc">$</span>lev, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">k =</span> <span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |----------                                                            |  14%
+  |                                                                            
+  |--------------------                                                  |  29%
+  |                                                                            
+  |------------------------------                                        |  43%
+  |                                                                            
+  |----------------------------------------                              |  57%
+  |                                                                            
+  |--------------------------------------------------                    |  71%
+  |                                                                            
+  |------------------------------------------------------------          |  86%
+  |                                                                            
+  |----------------------------------------------------------------------| 100%
+Note that the sign of parameter estimates is stored separately; see ?mgm</code></pre>
+</div>
+</div>
+<p>提取领接矩阵：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit_k2<span class="sc">$</span>pairwise<span class="sc">$</span>wadj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
+[1,] 0.00000000 0.05650110 0.01891638 0.17205785 0.37208064 0.02150960
+[2,] 0.05650110 0.00000000 0.22270593 0.21779243 0.50904041 0.00000000
+[3,] 0.01891638 0.22270593 0.00000000 0.33738414 0.09886023 0.24073935
+[4,] 0.17205785 0.21779243 0.33738414 0.00000000 0.00000000 0.00000000
+[5,] 0.37208064 0.50904041 0.09886023 0.00000000 0.00000000 0.34679957
+[6,] 0.02150960 0.00000000 0.24073935 0.00000000 0.34679957 0.00000000
+[7,] 0.04326794 0.05566156 0.32121423 0.07538601 0.06715508 0.04882564
+           [,7]
+[1,] 0.04326794
+[2,] 0.05566156
+[3,] 0.32121423
+[4,] 0.07538601
+[5,] 0.06715508
+[6,] 0.04882564
+[7,] 0.00000000</code></pre>
+</div>
+</div>
+<p>绘制网络图：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qgraph</span>(fit_k2<span class="sc">$</span>pairwise<span class="sc">$</span>wadj,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">edge.color =</span> fit_k2<span class="sc">$</span>pairwise<span class="sc">$</span>edgecolor,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">layout =</span> <span class="st">"spring"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">labels =</span>  autism_data<span class="sc">$</span>colnames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="混合变量网络分析_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="计算中心性" class="level4">
+<h4 class="anchored" data-anchor-id="计算中心性">2.3 计算中心性</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centrality</span>(fit_k2<span class="sc">$</span>pairwise<span class="sc">$</span>wadj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$OutDegree
+[1] 0.6843335 1.0617014 1.2398203 0.8026204 1.3939359 0.6578742 0.6115105
+
+$InDegree
+[1] 0.6843335 1.0617014 1.2398203 0.8026204 1.3939359 0.6578742 0.6115105
+
+$Closeness
+[1] 0.02538851 0.03552435 0.03338681 0.03019457 0.03320694 0.03140568 0.02196939
+
+$Betweenness
+[1]  0  6 12  4  6  0  0
+
+$InExpectedInfluence
+[1] 0.6843335 1.0617014 1.2398203 0.8026204 1.3939359 0.6578742 0.6115105
+
+$OutExpectedInfluence
+[1] 0.6843335 1.0617014 1.2398203 0.8026204 1.3939359 0.6578742 0.6115105
+
+$ShortestPathLengths
+          [,1]     [,2]     [,3]     [,4]     [,5]     [,6]      [,7]
+[1,]  0.000000 4.652070 8.775979 5.811999 2.687589 5.571099 11.889166
+[2,]  4.652070 0.000000 4.490226 4.591528 1.964481 4.847991  7.603413
+[3,]  8.775979 4.490226 0.000000 2.963980 6.454707 4.153870  3.113187
+[4,]  5.811999 4.591528 2.963980 0.000000 6.556008 7.117851  6.077168
+[5,]  2.687589 1.964481 6.454707 6.556008 0.000000 2.883510  9.567894
+[6,]  5.571099 4.847991 4.153870 7.117851 2.883510 0.000000  7.267057
+[7,] 11.889166 7.603413 3.113187 6.077168 9.567894 7.267057  0.000000
+
+$ShortestPaths
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+[1,] NULL NULL NULL NULL NULL NULL NULL
+[2,] NULL NULL NULL NULL NULL NULL NULL
+[3,] NULL NULL NULL NULL NULL NULL NULL
+[4,] NULL NULL NULL NULL NULL NULL NULL
+[5,] NULL NULL NULL NULL NULL NULL NULL
+[6,] NULL NULL NULL NULL NULL NULL NULL
+[7,] NULL NULL NULL NULL NULL NULL NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(fit_k2<span class="sc">$</span>pairwise<span class="sc">$</span>wadj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="混合变量网络分析_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="边缘精确性分析" class="level4">
+<h4 class="anchored" data-anchor-id="边缘精确性分析">2.4 边缘精确性分析</h4>
+<p>关于混合图网络模型到的精确性、差异性和稳定性检验，同样会用到bootnet包。bootnet包支持多种模型算法，但需要设置estimateNetwork封装，且需要设置default。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mgm_net <span class="ot">=</span> <span class="fu">estimateNetwork</span>(autism_data<span class="sc">$</span>data,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">type =</span> autism_data<span class="sc">$</span>type,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">level =</span> autism_data<span class="sc">$</span>lev,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">default =</span> <span class="st">'mgm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Estimating Network. Using package::function:
+  - mgm::mgm for network computation
+    - Using glmnet::glmnet</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in (function (data, type, level, tuning = 0.25, missing = c("listwise",
+: Bootnet does not support unsigned edges and treats these as positive edges.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mgm_net)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Estimated network ===
+Number of nodes: 7 
+Number of non-zero edges: 13 / 21 
+Mean weight: 0.09694593 
+Network stored in mgm_net$graph 
+ 
+Default set used: mgm 
+ 
+Use plot(mgm_net) to plot estimated network 
+Use bootnet(mgm_net) to bootstrap edge weights and centrality indices 
+
+Relevant references:
+
+    Jonas M. B. Haslbeck, Lourens J. Waldorp (2016). mgm: Structure Estimation for Time-Varying Mixed Graphical Models in high-dimensional Data arXiv preprint:1510.06871v2 URL http://arxiv.org/abs/1510.06871v2.
+    Epskamp, S., Borsboom, D., &amp; Fried, E. I. (2016). Estimating psychological networks and their accuracy: a tutorial paper. arXiv preprint, arXiv:1604.08462.</code></pre>
+</div>
+</div>
+<p>绘图：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mgm_net, <span class="at">layout =</span> <span class="st">'spring'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="混合变量网络分析_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(mgm_net)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="混合变量网络分析_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>重抽样，为了节约时间，这里仅抽样50次：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>boot_results2 <span class="ot">=</span> <span class="fu">bootnet</span>(mgm_net, <span class="at">nBoots =</span> <span class="dv">50</span>,<span class="at">default =</span> <span class="st">'mgm'</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">type =</span> <span class="st">"nonparametric"</span>,<span class="at">nCores =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Note: bootnet will store only the following statistics:  edge, strength, outStrength, inStrength</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Bootstrapping...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Computing statistics...</code></pre>
+</div>
+</div>
+<p>可以把数据存储起来，代码可以这样写的save(boot_results2, file = “mgm_boot_results2_mgm.RData”)，我这里就不运行了。</p>
+<p>然后，可以通过画图看看边缘估计的精确性：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results2, <span class="at">labels=</span><span class="cn">FALSE</span>, <span class="at">order=</span><span class="st">"sample"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="混合变量网络分析_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>部分边缘的95%CI还是有些宽的（阴影部分）。</p>
+</section>
+<section id="差异性分析" class="level4">
+<h4 class="anchored" data-anchor-id="差异性分析">2.5 差异性分析</h4>
+</section>
+<section id="中心性指标" class="level4">
+<h4 class="anchored" data-anchor-id="中心性指标">2.5.1 中心性指标</h4>
+<p>一般会检验强度中心性（Strength），下面的代码检验了各节点的Strength是否有显著差异。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  节点差异性检验  输出数值</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>res2 <span class="ot">=</span> <span class="fu">summary</span>(boot_results2) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  ungroup <span class="sc">%&gt;%</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"edge"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>sample)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>res2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 17
+   type  id        node1 node2 sample   mean     sd CIlower CIupper   q2.5 q97.5
+   &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+ 1 edge  IQ--Type… IQ    Type… 0.494  0.500  0.0303  0.433    0.555 0.423  0.559
+ 2 edge  Integrat… Inte… No o… 0.315  0.333  0.0438  0.228    0.403 0.204  0.433
+ 3 edge  Integrat… Inte… Sati… 0.314  0.315  0.0260  0.262    0.366 0.260  0.374
+ 4 edge  Type of … Type… Work… 0.306  0.327  0.0365  0.233    0.378 0.241  0.391
+ 5 edge  Gender--… Gend… Type… 0.300  0.329  0.0530  0.194    0.407 0.225  0.502
+ 6 edge  IQ--Inte… IQ    Inte… 0.207  0.199  0.0396  0.127    0.286 0.0978 0.265
+ 7 edge  Gender--… Gend… No o… 0.152  0.156  0.0395  0.0727   0.231 0.0205 0.245
+ 8 edge  Integrat… Inte… Work… 0.148  0.199  0.0424  0.0627   0.232 0.133  0.307
+ 9 edge  Integrat… Inte… Type… 0.0825 0.101  0.0262  0.0301   0.135 0.0423 0.162
+10 edge  Type of … Type… Sati… 0.0605 0.0598 0.0383 -0.0161   0.137 0      0.141
+# ℹ 11 more rows
+# ℹ 6 more variables: q2.5_non0 &lt;dbl&gt;, mean_non0 &lt;dbl&gt;, q97.5_non0 &lt;dbl&gt;,
+#   var_non0 &lt;dbl&gt;, sd_non0 &lt;dbl&gt;, prop0 &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>可视化看看，结论会更清晰。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 节点的两两比较，黑色表示显著</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results2, <span class="at">statistics=</span><span class="st">"Strength"</span>, <span class="at">plot=</span><span class="st">"difference"</span>,<span class="at">order =</span> <span class="st">"mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Expected significance level given number of bootstrap samples is approximately: 0.049</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="混合变量网络分析_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>如果你对此图的含义还不清楚，可以回看前面的"横断面网络"一节。</p>
+</section>
+<section id="边缘比较" class="level4">
+<h4 class="anchored" data-anchor-id="边缘比较">2.5.2 边缘比较</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results2, <span class="st">"edge"</span>, <span class="at">plot =</span> <span class="st">"difference"</span>, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">onlyNonZero =</span> <span class="cn">TRUE</span>, <span class="at">order =</span> <span class="st">"sample"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Expected significance level given number of bootstrap samples is approximately: 0.05</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="混合变量网络分析_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="稳定性分析" class="level4">
+<h4 class="anchored" data-anchor-id="稳定性分析">2.6 稳定性分析</h4>
+<p>与普通网络分析的方法类似，可以采用案例剔除法+bootstrap进行稳定性分析。bootnet提供了一个好用的接口，但此处需要额外调整下default。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>drop_res <span class="ot">=</span> <span class="fu">bootnet</span>(mgm_net, <span class="at">nBoots =</span> <span class="dv">100</span>, <span class="at">default =</span> <span class="st">"mgm"</span>, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type=</span><span class="st">"case"</span>, <span class="at">statistics=</span><span class="st">"all"</span>,<span class="at">nCores =</span> <span class="dv">12</span>) <span class="co">#减轻计算负担</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Bootstrapping...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Computing statistics...</code></pre>
+</div>
+</div>
+<p>求稳定性相关系数：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#计算相关稳定性系数</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">corStability</span>(drop_res) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== Correlation Stability Analysis === 
+
+Sampling levels tested:
+   nPerson Drop%  n
+1      880  75.0 10
+2     1154  67.2  9
+3     1428  59.4  9
+4     1702  51.7  8
+5     1976  43.9  8
+6     2250  36.1 14
+7     2523  28.3  4
+8     2797  20.6  9
+9     3071  12.8 18
+10    3345   5.0 11
+
+Maximum drop proportions to retain correlation of 0.7 in at least 95% of the samples:
+
+betweenness: 0.517 
+  - For more accuracy, run bootnet(..., caseMin = 0.439, caseMax = 0.594) 
+
+closeness: 0.517 
+  - For more accuracy, run bootnet(..., caseMin = 0.439, caseMax = 0.594) 
+
+distance: 0.75 (CS-coefficient is highest level tested)
+  - For more accuracy, run bootnet(..., caseMin = 0.672, caseMax = 1) 
+
+edge: 0.75 (CS-coefficient is highest level tested)
+  - For more accuracy, run bootnet(..., caseMin = 0.672, caseMax = 1) 
+
+eigenvector: 0.75 (CS-coefficient is highest level tested)
+  - For more accuracy, run bootnet(..., caseMin = 0.672, caseMax = 1) 
+
+expectedInfluence: 0.75 (CS-coefficient is highest level tested)
+  - For more accuracy, run bootnet(..., caseMin = 0.672, caseMax = 1) 
+
+hybrid: 0.75 (CS-coefficient is highest level tested)
+  - For more accuracy, run bootnet(..., caseMin = 0.672, caseMax = 1) 
+
+length: 0 
+  - For more accuracy, run bootnet(..., caseMin = 0, caseMax = 0.05) 
+
+rspbc: 0.75 (CS-coefficient is highest level tested)
+  - For more accuracy, run bootnet(..., caseMin = 0.672, caseMax = 1) 
+
+strength: 0.75 (CS-coefficient is highest level tested)
+  - For more accuracy, run bootnet(..., caseMin = 0.672, caseMax = 1) 
+
+Accuracy can also be increased by increasing both 'nBoots' and 'caseN'.</code></pre>
+</div>
+</div>
+<p>可以看到，几个重要的指标（强度、预期影响等）的相关稳定性系数都大于0.25，部分指标系数高达0.75，符合最低要求。</p>
+<p>绘图可能更为直观一点：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(drop_res, <span class="at">statistics=</span><span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="混合变量网络分析_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>运行环境：</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.3.2 (2023-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19045)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=Chinese (Simplified)_China.utf8 
+[2] LC_CTYPE=Chinese (Simplified)_China.utf8   
+[3] LC_MONETARY=Chinese (Simplified)_China.utf8
+[4] LC_NUMERIC=C                               
+[5] LC_TIME=Chinese (Simplified)_China.utf8    
+
+time zone: Asia/Shanghai
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
+ [5] purrr_1.0.2     readr_2.1.4     tidyr_1.3.1     tibble_3.2.1   
+ [9] tidyverse_2.0.0 bootnet_1.6     ggplot2_3.5.0   qgraph_1.9.8   
+[13] mgm_1.2-14     
+
+loaded via a namespace (and not attached):
+  [1] RColorBrewer_1.1-3   rstudioapi_0.16.0    jsonlite_1.8.7      
+  [4] shape_1.4.6          magrittr_2.0.3       jomo_2.7-6          
+  [7] farver_2.1.1         nloptr_2.0.3         rmarkdown_2.25      
+ [10] vctrs_0.6.4          minqa_1.2.6          heplots_1.6.0       
+ [13] base64enc_0.1-3      htmltools_0.5.7      polynom_1.4-1       
+ [16] plotrix_3.8-4        weights_1.0.4        broom_1.0.5         
+ [19] Formula_1.2-5        mitml_0.4-5          htmlwidgets_1.6.2   
+ [22] plyr_1.8.9           igraph_2.0.1.1       lifecycle_1.0.4     
+ [25] iterators_1.0.14     pkgconfig_2.0.3      Matrix_1.6-5        
+ [28] R6_2.5.1             fastmap_1.1.1        digest_0.6.33       
+ [31] fdrtool_1.2.17       colorspace_2.1-0     Hmisc_5.1-1         
+ [34] ellipse_0.5.0        labeling_0.4.3       fansi_1.0.5         
+ [37] nnls_1.5             timechange_0.2.0     gdata_3.0.0         
+ [40] abind_1.4-5          IsingSampler_0.2.3   compiler_4.3.2      
+ [43] proxy_0.4-27         withr_2.5.2          doParallel_1.0.17   
+ [46] glasso_1.11          htmlTable_2.4.2      backports_1.4.1     
+ [49] carData_3.0-5        psych_2.3.9          R.utils_2.12.3      
+ [52] pan_1.9              MASS_7.3-60          corpcor_1.6.10      
+ [55] gtools_3.9.5         tools_4.3.2          pbivnorm_0.6.0      
+ [58] foreign_0.8-85       nnet_7.3-19          R.oo_1.25.0         
+ [61] glue_1.6.2           quadprog_1.5-8       NetworkToolbox_1.4.2
+ [64] nlme_3.1-163         grid_4.3.2           checkmate_2.3.0     
+ [67] cluster_2.1.4        reshape2_1.4.4       generics_0.1.3      
+ [70] snow_0.4-4           gtable_0.3.4         tzdb_0.4.0          
+ [73] R.methodsS3_1.8.2    class_7.3-22         data.table_1.15.4   
+ [76] hms_1.1.3            car_3.1-2            utf8_1.2.4          
+ [79] foreach_1.5.2        pillar_1.9.0         splines_4.3.2       
+ [82] smacof_2.1-5         networktools_1.5.1   lattice_0.21-9      
+ [85] survival_3.5-7       tidyselect_1.2.0     pbapply_1.7-2       
+ [88] knitr_1.45           gridExtra_2.3        IsingFit_0.4        
+ [91] stats4_4.3.2         xfun_0.41            stringi_1.8.1       
+ [94] yaml_2.3.7           boot_1.3-28.1        evaluate_0.23       
+ [97] codetools_0.2-19     wordcloud_2.6        cli_3.6.2           
+[100] rpart_4.1.21         munsell_0.5.0        lavaan_0.6-17       
+[103] candisc_0.8-6        Rcpp_1.0.11          png_0.1-8           
+[106] parallel_4.3.2       rgl_1.2.1            jpeg_0.1-10         
+[109] lme4_1.1-35.1        glmnet_4.1-8         mvtnorm_1.2-3       
+[112] scales_1.3.0         e1071_1.7-13         eigenmodel_1.11     
+[115] rlang_1.1.3          mnormt_2.1.1         mice_3.16.0         </code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./二分类变量网络分析.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">二分类变量的网络分析</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./有调节的网络.html" class="pagination-link">
+        <span class="nav-page-text">有调节的网络</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
