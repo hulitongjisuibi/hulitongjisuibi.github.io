@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -106,13 +113,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./横断面网络完整版.html">网络分析实战</a></li><li class="breadcrumb-item"><a href="./时间网络分析.html">时间网络分析</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./横断面网络完整版.html">网络分析实战</a></li><li class="breadcrumb-item"><a href="./时间网络分析.html">时间网络分析</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -121,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -129,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
         <div class="sidebar-tools-collapse">
     <div class="dropdown">
-      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label=""><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-collapse-item" href="https://github.com/hulitongjisuibi/hulitongjisuibi.github.io">
@@ -155,9 +162,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">网络分析实战</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -227,25 +234,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#时间网络分析概述" id="toc-时间网络分析概述" class="nav-link active" data-scroll-target="#时间网络分析概述">1 时间网络分析概述</a>
-  <ul class="collapse">
+  <li><a href="#时间网络分析概述" id="toc-时间网络分析概述" class="nav-link active" data-scroll-target="#时间网络分析概述">1 时间网络分析概述</a></li>
   <li><a href="#r语言实战" id="toc-r语言实战" class="nav-link" data-scroll-target="#r语言实战">2 R语言实战</a></li>
   <li><a href="#几个需要注意的地方" id="toc-几个需要注意的地方" class="nav-link" data-scroll-target="#几个需要注意的地方">3 几个需要注意的地方</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./横断面网络完整版.html">网络分析实战</a></li><li class="breadcrumb-item"><a href="./时间网络分析.html">时间网络分析</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">时间网络分析</h1>
 </div>
@@ -260,10 +265,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
 
-<section id="时间网络分析概述" class="level2">
-<h2 class="anchored" data-anchor-id="时间网络分析概述">1 时间网络分析概述</h2>
+
+<section id="时间网络分析概述" class="level3">
+<h3 class="anchored" data-anchor-id="时间网络分析概述">1 时间网络分析概述</h3>
 <section id="几种数据类型" class="level4">
 <h4 class="anchored" data-anchor-id="几种数据类型">1.1 几种数据类型</h4>
 <p>首先，从测量次数角度，我们要注意区分几种数据类型：单一测量数据（每人一个测量）、面板数据（许多人测量了几次）、N = 1时间序列数据（一个人测量了多次）和N &gt; 1时间序列数据（几个人测量了多次）。</p>
@@ -289,55 +296,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>我在上述对应R包的名字上附上了具体文献或者代码仓库的超链接，你如果感兴趣的话，可以点进去看看这些文献对Temporal network analysis的具体实现方法。</p>
 <p>个人比较推荐使用<strong>mlVAR</strong>构建时间序列网络模型。</p>
 </section>
+</section>
 <section id="r语言实战" class="level3">
 <h3 class="anchored" data-anchor-id="r语言实战">2 R语言实战</h3>
 <section id="准备数据" class="level4">
 <h4 class="anchored" data-anchor-id="准备数据">2.1 准备数据</h4>
 <p>为了避免版本兼容性问题，大家可以先跳转到文末看看我使用的R语言环境。</p>
 <p>先导入需要使用的程序包，没有安装的请先安装。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'mlVAR'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'mlVAR' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'qgraph'</span>) </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"networktools"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>本次我们用mlVAR包的mlVARsim函数模拟一份数据(实际是拟合也了一个时间网络模型)，为了减轻电脑的计算负担，设置受试者人数为50，节点数为8个，测量次数是30，阶数lag为1，其它都是默认设置。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Model <span class="ot">=</span> <span class="fu">mlVARsim</span>(<span class="at">nPerson =</span> <span class="dv">50</span>,<span class="at">nNode =</span> <span class="dv">8</span>, <span class="at">nTime =</span> <span class="dv">30</span>, <span class="at">lag=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Model <span class="ot">=</span> <span class="fu">mlVARsim</span>(<span class="at">nPerson =</span> <span class="dv">50</span>,<span class="at">nNode =</span> <span class="dv">8</span>, <span class="at">nTime =</span> <span class="dv">30</span>, <span class="at">lag=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>查看数据：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Model<span class="sc">$</span>Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Model<span class="sc">$</span>Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         V1       V2        V3        V4        V5         V6         V7
-1 2.0335217 3.157925 -3.876432 -4.733132 -2.543258 -0.6276040  1.4945052
-2 2.2822126 3.732587 -4.179065 -1.685546 -2.404072  1.7619746 -0.1781815
-3 1.5409651 2.615361 -2.934132 -3.383525 -1.873246  2.5694409 -3.4722245
-4 0.6782198 3.847820 -1.470588 -5.984845 -2.705544  1.5355441 -0.9820712
-5 3.8371249 3.970785 -1.777491 -2.959565 -3.943941  0.5437959 -1.6252762
-6 3.0328899 1.786133 -1.560092 -1.860449 -2.511397  2.1500955  1.1310869
-         V8 ID
-1 -8.729056  1
-2 -7.772314  1
-3 -6.317016  1
-4 -6.868845  1
-5 -6.163121  1
-6 -5.477314  1</code></pre>
+<pre><code>          V1         V2         V3         V4         V5         V6          V7
+1 -0.3947046  0.6283051 -1.2678458 -1.7344497 -3.4298764 -1.5974017  0.09894146
+2  1.8501570 -0.3205794 -0.1576001 -2.7206812 -4.5943583 -0.9191869 -2.14874582
+3  2.3839202 -1.6158505  0.1396443 -2.1052779 -0.9537626 -2.4299875  0.22429909
+4 -2.2812695  3.1539275  0.5900282 -2.5753006 -1.6115047 -2.0194019 -1.02667115
+5  1.4907908 -1.5062154 -0.1919787 -0.5141523 -1.6294655 -0.8039993 -2.05406600
+6  0.5983460  1.4703204  1.8300108 -3.6673056 -2.4320034 -2.2530438  0.35204864
+           V8 ID
+1  0.71603054  1
+2 -1.51668525  1
+3 -0.65903437  1
+4 -0.66868105  1
+5 -0.03536088  1
+6 -2.10945328  1</code></pre>
 </div>
 </div>
 <p>查看节点名：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Model<span class="sc">$</span>vars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Model<span class="sc">$</span>vars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "V1" "V2" "V3" "V4" "V5" "V6" "V7" "V8"</code></pre>
 </div>
 </div>
 <p>查看受试者变量：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Model<span class="sc">$</span>idvar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Model<span class="sc">$</span>idvar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "ID"</code></pre>
 </div>
 </div>
 <p>绘图：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="时间网络分析_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -346,20 +366,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>好戏开始：用mlVAR函数拟合时间网络模型！</p>
 <p>这里面的data、vars、idvar是必须写的，分别表示数据、要分析的变量名、代表受试者的变量。lags可以选用默认参数，estimator是估计器，具体的选项可以查看帮助文档，这里选择lmer；contemporaneous（同期网络）、temporal（时序网络）估计方法都采用”correlated”；nCores指定使用的cpu核心数，计算量不小，可以适当大一些。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">mlVAR</span>(<span class="at">data =</span> Model<span class="sc">$</span>Data, </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">vars =</span> Model<span class="sc">$</span>vars, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">idvar =</span> Model<span class="sc">$</span>idvar, </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">lags =</span> <span class="dv">1</span>, </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">estimator =</span> <span class="st">"lmer"</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">temporal =</span> <span class="st">"correlated"</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">contemporaneous =</span> <span class="st">"correlated"</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">nCores =</span> <span class="dv">8</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">verbose =</span>F</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">mlVAR</span>(<span class="at">data =</span> Model<span class="sc">$</span>Data, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">vars =</span> Model<span class="sc">$</span>vars, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">idvar =</span> Model<span class="sc">$</span>idvar, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">lags =</span> <span class="dv">1</span>, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">estimator =</span> <span class="st">"lmer"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">temporal =</span> <span class="st">"correlated"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">contemporaneous =</span> <span class="st">"correlated"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">nCores =</span> <span class="dv">8</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">verbose =</span>F</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>总结模型：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 mlVAR estimation completed. Input was:
@@ -370,146 +390,146 @@ mlVAR estimation completed. Input was:
 
 Information indices:
  var      aic      bic
-  V1 3199.817 3527.135
-  V2 2934.493 3261.810
-  V3 3112.823 3440.141
-  V4 2840.875 3168.193
-  V5 2705.464 3032.781
-  V6 2985.371 3312.689
-  V7 3090.526 3417.844
-  V8 2959.122 3286.440
+  V1 2835.656 3162.973
+  V2 2706.655 3033.972
+  V3 2809.293 3136.611
+  V4 2948.183 3275.501
+  V5 2978.383 3305.701
+  V6 2797.174 3124.492
+  V7 3080.895 3408.213
+  V8 3370.471 3697.788
 
 
 Temporal effects:
  from to lag  fixed    SE     P ran_SD
-   V1 V1   1  0.116 0.029 0.000  0.078
-   V1 V2   1  0.175 0.027 0.000  0.090
-   V1 V3   1 -0.515 0.041 0.000  0.216
-   V1 V4   1 -0.441 0.030 0.000  0.120
-   V1 V5   1  0.005 0.033 0.890  0.162
-   V1 V6   1  0.362 0.028 0.000  0.083
-   V1 V7   1  0.269 0.030 0.000  0.102
-   V1 V8   1  0.035 0.041 0.394  0.229
-   V2 V1   1  0.032 0.042 0.449  0.242
-   V2 V2   1  0.132 0.036 0.000  0.199
-   V2 V3   1  0.309 0.032 0.000  0.154
-   V2 V4   1  0.140 0.031 0.000  0.154
-   V2 V5   1  0.037 0.032 0.250  0.174
-   V2 V6   1 -0.384 0.039 0.000  0.229
-   V2 V7   1 -0.285 0.036 0.000  0.196
-   V2 V8   1  0.048 0.034 0.154  0.182
-   V3 V1   1  0.027 0.030 0.372  0.102
-   V3 V2   1  0.004 0.027 0.886  0.084
-   V3 V3   1  0.117 0.032 0.000  0.134
-   V3 V4   1  0.167 0.035 0.000  0.178
-   V3 V5   1 -0.265 0.025 0.000  0.082
-   V3 V6   1 -0.023 0.029 0.425  0.105
-   V3 V7   1 -0.038 0.027 0.159  0.064
-   V3 V8   1  0.332 0.029 0.000  0.109
-   V4 V1   1  0.050 0.036 0.168  0.180
-   V4 V2   1 -0.181 0.036 0.000  0.198
-   V4 V3   1 -0.022 0.039 0.573  0.208
-   V4 V4   1  0.255 0.039 0.000  0.224
-   V4 V5   1  0.184 0.038 0.000  0.219
-   V4 V6   1  0.161 0.038 0.000  0.208
-   V4 V7   1 -0.239 0.043 0.000  0.248
-   V4 V8   1  0.138 0.038 0.000  0.208
-   V5 V1   1 -0.022 0.029 0.448  0.106
-   V5 V2   1  0.392 0.026 0.000  0.077
-   V5 V3   1 -0.131 0.029 0.000  0.101
-   V5 V4   1 -0.024 0.026 0.351  0.088
-   V5 V5   1  0.055 0.028 0.049  0.122
-   V5 V6   1  0.027 0.030 0.369  0.129
-   V5 V7   1  0.043 0.031 0.162  0.134
-   V5 V8   1 -0.041 0.025 0.092  0.053
-   V6 V1   1 -0.023 0.033 0.492  0.141
-   V6 V2   1 -0.039 0.046 0.394  0.271
-   V6 V3   1  0.098 0.038 0.009  0.187
-   V6 V4   1 -0.066 0.034 0.055  0.170
-   V6 V5   1  0.167 0.040 0.000  0.227
-   V6 V6   1  0.009 0.040 0.820  0.212
-   V6 V7   1 -0.105 0.039 0.007  0.201
-   V6 V8   1 -0.018 0.039 0.639  0.211
-   V7 V1   1 -0.012 0.034 0.731  0.155
-   V7 V2   1 -0.016 0.027 0.554  0.092
-   V7 V3   1  0.019 0.035 0.582  0.168
-   V7 V4   1  0.251 0.029 0.000  0.119
-   V7 V5   1  0.183 0.026 0.000  0.097
-   V7 V6   1 -0.042 0.027 0.126  0.094
-   V7 V7   1  0.031 0.027 0.253  0.071
-   V7 V8   1  0.253 0.026 0.000  0.071
-   V8 V1   1 -0.072 0.042 0.087  0.226
-   V8 V2   1 -0.432 0.037 0.000  0.192
-   V8 V3   1  0.138 0.042 0.001  0.232
-   V8 V4   1 -0.027 0.040 0.493  0.219
-   V8 V5   1  0.219 0.038 0.000  0.216
-   V8 V6   1 -0.033 0.039 0.393  0.211
-   V8 V7   1  0.202 0.038 0.000  0.197
-   V8 V8   1  0.137 0.040 0.001  0.220
+   V1 V1   1  0.048 0.025 0.060  0.053
+   V1 V2   1  0.024 0.026 0.366  0.085
+   V1 V3   1 -0.047 0.024 0.054  0.032
+   V1 V4   1  0.139 0.028 0.000  0.082
+   V1 V5   1 -0.015 0.025 0.548  0.028
+   V1 V6   1  0.238 0.024 0.000  0.004
+   V1 V7   1 -0.116 0.029 0.000  0.092
+   V1 V8   1  0.014 0.037 0.718  0.163
+   V2 V1   1 -0.008 0.037 0.840  0.202
+   V2 V2   1  0.066 0.038 0.082  0.213
+   V2 V3   1 -0.435 0.031 0.000  0.144
+   V2 V4   1 -0.075 0.041 0.070  0.234
+   V2 V5   1  0.023 0.043 0.594  0.249
+   V2 V6   1  0.002 0.032 0.950  0.158
+   V2 V7   1 -0.211 0.042 0.000  0.228
+   V2 V8   1 -0.021 0.041 0.606  0.212
+   V3 V1   1  0.013 0.024 0.574  0.077
+   V3 V2   1  0.485 0.027 0.000  0.121
+   V3 V3   1  0.234 0.030 0.000  0.151
+   V3 V4   1  0.366 0.044 0.000  0.269
+   V3 V5   1 -0.103 0.025 0.000  0.083
+   V3 V6   1 -0.008 0.026 0.759  0.105
+   V3 V7   1  0.036 0.041 0.385  0.243
+   V3 V8   1 -0.020 0.035 0.557  0.164
+   V4 V1   1 -0.049 0.037 0.181  0.205
+   V4 V2   1  0.272 0.031 0.000  0.155
+   V4 V3   1 -0.155 0.036 0.000  0.195
+   V4 V4   1  0.016 0.034 0.630  0.172
+   V4 V5   1 -0.189 0.031 0.000  0.141
+   V4 V6   1 -0.112 0.027 0.000  0.114
+   V4 V7   1  0.003 0.028 0.904  0.095
+   V4 V8   1 -0.335 0.036 0.000  0.171
+   V5 V1   1 -0.384 0.028 0.000  0.112
+   V5 V2   1  0.233 0.029 0.000  0.133
+   V5 V3   1 -0.244 0.034 0.000  0.175
+   V5 V4   1  0.065 0.028 0.022  0.105
+   V5 V5   1  0.125 0.031 0.000  0.137
+   V5 V6   1  0.181 0.030 0.000  0.135
+   V5 V7   1  0.011 0.027 0.675  0.075
+   V5 V8   1  0.037 0.040 0.364  0.202
+   V6 V1   1  0.010 0.038 0.798  0.204
+   V6 V2   1 -0.177 0.036 0.000  0.188
+   V6 V3   1  0.164 0.042 0.000  0.233
+   V6 V4   1  0.009 0.045 0.834  0.257
+   V6 V5   1  0.307 0.039 0.000  0.202
+   V6 V6   1  0.123 0.036 0.001  0.183
+   V6 V7   1  0.065 0.038 0.088  0.187
+   V6 V8   1 -0.058 0.054 0.283  0.311
+   V7 V1   1 -0.479 0.027 0.000  0.067
+   V7 V2   1 -0.047 0.026 0.066  0.059
+   V7 V3   1 -0.214 0.027 0.000  0.063
+   V7 V4   1  0.123 0.030 0.000  0.096
+   V7 V5   1 -0.152 0.028 0.000  0.067
+   V7 V6   1 -0.293 0.027 0.000  0.070
+   V7 V7   1  0.097 0.034 0.004  0.141
+   V7 V8   1  0.016 0.040 0.688  0.185
+   V8 V1   1 -0.173 0.039 0.000  0.226
+   V8 V2   1  0.037 0.028 0.181  0.126
+   V8 V3   1 -0.006 0.031 0.855  0.155
+   V8 V4   1  0.004 0.027 0.895  0.098
+   V8 V5   1  0.017 0.034 0.612  0.175
+   V8 V6   1 -0.253 0.031 0.000  0.160
+   V8 V7   1 -0.146 0.035 0.000  0.176
+   V8 V8   1 -0.037 0.037 0.314  0.183
 
 
 Contemporaneous effects (posthoc estimated):
  v1 v2 P 1-&gt;2 P 1&lt;-2   pcor ran_SD_pcor    cor ran_SD_cor
- V2 V1  0.000  0.000 -0.255       0.218 -0.237      0.243
- V3 V1  0.761  0.999 -0.006       0.171 -0.031      0.186
- V3 V2  0.351  0.302  0.042       0.184 -0.116      0.185
- V4 V1  0.000  0.000  0.224       0.169  0.263      0.232
- V4 V2  0.771  0.861  0.009       0.172 -0.039      0.218
- V4 V3  0.451  0.683 -0.022       0.141 -0.063      0.204
- V5 V1  0.013  0.002 -0.124       0.209 -0.060      0.236
- V5 V2  0.000  0.000  0.194       0.203  0.275      0.217
- V5 V3  0.000  0.000 -0.264       0.189 -0.335      0.219
- V5 V4  0.000  0.000  0.182       0.239  0.193      0.286
- V6 V1  0.000  0.000  0.177       0.084  0.060      0.172
- V6 V2  0.000  0.000  0.287       0.215  0.306      0.212
- V6 V3  0.000  0.000 -0.270       0.140 -0.321      0.146
- V6 V4  0.000  0.001 -0.147       0.165 -0.108      0.234
- V6 V5  0.038  0.005  0.089       0.131  0.214      0.188
- V7 V1  0.104  0.161  0.063       0.173  0.204      0.165
- V7 V2  0.610  0.653  0.020       0.171 -0.017      0.239
- V7 V3  0.738  0.273 -0.026       0.137 -0.059      0.206
- V7 V4  0.000  0.000  0.310       0.169  0.404      0.200
- V7 V5  0.847  0.588 -0.006       0.156  0.131      0.267
- V7 V6  0.008  0.013 -0.090       0.117 -0.078      0.157
- V8 V1  0.000  0.000  0.166       0.146  0.220      0.171
- V8 V2  0.406  0.858  0.023       0.189  0.047      0.284
- V8 V3  0.954  0.405 -0.015       0.142 -0.124      0.216
- V8 V4  0.586  0.979  0.010       0.123  0.230      0.206
- V8 V5  0.000  0.000  0.202       0.125  0.260      0.207
- V8 V6  0.311  0.312  0.039       0.153  0.075      0.227
- V8 V7  0.000  0.000  0.344       0.149  0.414      0.163
+ V2 V1  0.099  0.060 -0.076       0.196 -0.348      0.239
+ V3 V1  0.402  0.693  0.026       0.171  0.151      0.206
+ V3 V2  0.640  0.461  0.023       0.152  0.014      0.184
+ V4 V1  0.171  0.116 -0.058       0.160 -0.077      0.257
+ V4 V2  0.210  0.382 -0.046       0.194  0.004      0.293
+ V4 V3  0.000  0.000 -0.169       0.141 -0.147      0.187
+ V5 V1  0.000  0.000 -0.301       0.165 -0.463      0.173
+ V5 V2  0.001  0.003  0.117       0.144  0.321      0.191
+ V5 V3  0.000  0.000 -0.266       0.109 -0.290      0.146
+ V5 V4  0.001  0.001 -0.151       0.226 -0.053      0.269
+ V6 V1  0.000  0.000  0.194       0.221  0.408      0.166
+ V6 V2  0.000  0.000 -0.286       0.131 -0.464      0.192
+ V6 V3  0.716  0.512  0.021       0.171  0.088      0.213
+ V6 V4  0.220  0.386 -0.042       0.163 -0.042      0.273
+ V6 V5  0.000  0.000 -0.206       0.235 -0.402      0.231
+ V7 V1  0.000  0.000 -0.237       0.179 -0.385      0.182
+ V7 V2  0.000  0.000  0.223       0.153  0.442      0.183
+ V7 V3  0.501  0.253 -0.034       0.130 -0.017      0.203
+ V7 V4  0.000  0.001  0.140       0.160  0.142      0.236
+ V7 V5  0.467  0.281  0.042       0.227  0.241      0.209
+ V7 V6  0.687  0.536  0.019       0.132 -0.282      0.189
+ V8 V1  0.169  0.173  0.053       0.149 -0.142      0.235
+ V8 V2  0.000  0.000  0.251       0.113  0.417      0.167
+ V8 V3  0.000  0.000  0.265       0.147  0.252      0.187
+ V8 V4  0.859  0.813  0.001       0.138  0.011      0.168
+ V8 V5  0.426  0.391 -0.031       0.138  0.068      0.182
+ V8 V6  0.024  0.007 -0.090       0.123 -0.244      0.208
+ V8 V7  0.000  0.000  0.301       0.128  0.417      0.186
 
 
 Between-subject effects:
  v1 v2 P 1-&gt;2 P 1&lt;-2   pcor    cor
- V2 V1  0.282  0.811  0.080  0.155
- V3 V1  0.038  0.067  0.240  0.251
- V3 V2  0.958  0.467 -0.042  0.047
- V4 V1  0.122  0.295  0.164  0.126
- V4 V2  0.707  0.322  0.091  0.172
- V4 V3  0.418  0.238 -0.131 -0.117
- V5 V1  0.264  0.142 -0.161 -0.047
- V5 V2  0.085  0.001  0.306  0.185
- V5 V3  0.276  0.252  0.142  0.155
- V5 V4  0.121  0.187 -0.187 -0.345
- V6 V1  0.003  0.001  0.370  0.317
- V6 V2  0.128  0.713  0.122  0.057
- V6 V3  0.312  0.756  0.044  0.161
- V6 V4  0.311  0.704 -0.091 -0.244
- V6 V5  0.240  0.120  0.172  0.304
- V7 V1  0.132  0.183 -0.179 -0.121
- V7 V2  0.396  0.486  0.100  0.083
- V7 V3  0.334  0.764  0.081 -0.038
- V7 V4  0.036  0.036  0.261  0.349
- V7 V5  0.177  0.072 -0.198 -0.280
- V7 V6  0.290  0.685 -0.039 -0.215
- V8 V1  0.312  0.134  0.148  0.139
- V8 V2  0.001  0.001  0.378  0.362
- V8 V3  0.326  0.624  0.090  0.027
- V8 V4  0.121  0.029  0.225  0.407
- V8 V5  0.127  0.399 -0.146 -0.239
- V8 V6  0.000  0.017 -0.340 -0.344
- V8 V7  0.902  0.974 -0.006  0.188</code></pre>
+ V2 V1  0.416  0.308  0.004 -0.082
+ V3 V1  0.129  0.013 -0.255 -0.268
+ V3 V2  0.791  0.555 -0.056 -0.020
+ V4 V1  0.876  0.618 -0.040 -0.109
+ V4 V2  0.711  0.547 -0.015 -0.146
+ V4 V3  0.912  0.792  0.023  0.172
+ V5 V1  0.184  0.021 -0.216 -0.218
+ V5 V2  0.011  0.003  0.305  0.346
+ V5 V3  0.085  0.113 -0.204  0.005
+ V5 V4  0.083  0.027 -0.227 -0.123
+ V6 V1  0.467  0.787 -0.032 -0.123
+ V6 V2  0.614  0.333 -0.095 -0.258
+ V6 V3  0.003  0.023  0.326  0.289
+ V6 V4  0.000  0.001  0.398  0.313
+ V6 V5  0.000  0.000  0.456  0.303
+ V7 V1  0.411  0.125 -0.148 -0.055
+ V7 V2  0.000  0.048 -0.366 -0.413
+ V7 V3  0.018  0.105 -0.248 -0.148
+ V7 V4  0.486  0.126  0.132  0.211
+ V7 V5  0.461  0.072 -0.151 -0.271
+ V7 V6  0.561  0.750  0.058  0.030
+ V8 V1  0.487  0.080 -0.141 -0.162
+ V8 V2  0.001  0.000  0.405  0.490
+ V8 V3  0.209  0.061  0.187  0.029
+ V8 V4  0.057  0.023  0.246  0.023
+ V8 V5  0.240  0.636  0.094  0.018
+ V8 V6  0.000  0.000 -0.522 -0.508
+ V8 V7  0.220  0.173  0.150 -0.050</code></pre>
 </div>
 </div>
 <p>上面给出了大量的信息。值得注意的是，mlVAR包会输出3种效应：Temporal effects、Contemporaneous effects、Between-subject effects，分别对应时序网络、同期网络和个体间网络。</p>
@@ -523,36 +543,48 @@ Between-subject effects:
 <h4 class="anchored" data-anchor-id="可视化">2.3 可视化</h4>
 <p>我们可以分别绘制这些网络图：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 同期网络</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>contemporaneous <span class="ot">=</span> <span class="fu">plot</span>(fit1, <span class="at">type =</span> <span class="st">"temporal"</span>, <span class="at">title =</span> <span class="st">"Estimated temporal relationships"</span>, </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">rule =</span> <span class="st">"and"</span>,<span class="at">layout =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 同期网络</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>contemporaneous <span class="ot">=</span> <span class="fu">plot</span>(fit1, <span class="at">type =</span> <span class="st">"temporal"</span>, <span class="at">title =</span> <span class="st">"Estimated temporal relationships"</span>, </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">rule =</span> <span class="st">"and"</span>,<span class="at">layout =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>'nonsig' argument set to: 'hide'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="时间网络分析_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 时序网络</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>temporal<span class="ot">=</span><span class="fu">plot</span>(fit1, <span class="at">type =</span> <span class="st">"contemporaneous"</span>, <span class="at">rule =</span> <span class="st">"and"</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">title =</span> <span class="st">"Estimated contemporaneous relationships"</span>, <span class="at">layout =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 时序网络</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>temporal<span class="ot">=</span><span class="fu">plot</span>(fit1, <span class="at">type =</span> <span class="st">"contemporaneous"</span>, <span class="at">rule =</span> <span class="st">"and"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">title =</span> <span class="st">"Estimated contemporaneous relationships"</span>, <span class="at">layout =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>'nonsig' argument set to: 'hide'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="时间网络分析_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 受试者间网络  必须取名between，否则报错</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>between <span class="ot">=</span> <span class="fu">plot</span>(fit1, <span class="at">type =</span> <span class="st">"between"</span>, <span class="at">rule =</span> <span class="st">"or"</span>,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">title =</span> <span class="st">"Estimated between relationships"</span>, <span class="at">layout =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 受试者间网络  必须取名between，否则报错</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>between <span class="ot">=</span> <span class="fu">plot</span>(fit1, <span class="at">type =</span> <span class="st">"between"</span>, <span class="at">rule =</span> <span class="st">"or"</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">title =</span> <span class="st">"Estimated between relationships"</span>, <span class="at">layout =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>'nonsig' argument set to: 'hide'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="时间网络分析_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -560,49 +592,49 @@ Between-subject effects:
 <h4 class="anchored" data-anchor-id="计算中心性">2.4 计算中心性</h4>
 <p>可以跟横断面网络一样，计算或者开展后续一些常用的指标和检验，比如中心性，桥梁症状。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算中心性</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">centrality</span>(contemporaneous)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算中心性</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">centrality</span>(contemporaneous)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$OutDegree
        V1        V2        V3        V4        V5        V6        V7        V8 
-1.7626296 1.1175046 0.7645637 0.9034969 0.5231023 0.3698123 0.6865014 0.9912068 
+0.4925390 0.6458855 0.9547871 1.0629915 1.1064859 0.6482566 1.2613704 0.5718523 
 
 $InDegree
        V1        V2        V3        V4        V5        V6        V7        V8 
-0.0000000 1.1805817 1.1909310 0.9991603 1.0172301 0.9069345 1.1013387 0.7226413 
+1.0367715 1.1672818 1.2120965 0.6931952 0.7514356 1.0759159 0.4729358 0.3345361 
 
 $Closeness
         V1         V2         V3         V4         V5         V6         V7 
-0.03696362 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 
+0.01729126 0.02204046 0.02279112 0.02429358 0.02367785 0.01927779 0.02422298 
         V8 
-0.00000000 
+0.01778713 
 
 $Betweenness
 V1 V2 V3 V4 V5 V6 V7 V8 
- 0 11  6  0  1  0  2  6 
+ 0  6 11  9  2  7  3  2 
 
 $InExpectedInfluence
-         V1          V2          V3          V4          V5          V6 
- 0.00000000 -0.04617963 -0.10094765  0.11654432  0.48700373  0.13880776 
-         V7          V8 
--0.15752989  0.72264128 
+        V1         V2         V3         V4         V5         V6         V7 
+-1.0367715  0.8130958 -0.8837218  0.6931952 -0.1374832 -0.2395795 -0.4729358 
+        V8 
+-0.3345361 
 
 $OutExpectedInfluence
-         V1          V2          V3          V4          V5          V6 
--0.14918637 -0.22089092  0.23433731  0.06198312  0.26042372  0.16018255 
-         V7          V8 
- 0.68650135  0.12698916 
+        V1         V2         V3         V4         V5         V6         V7 
+ 0.2604529 -0.6458855  0.7480166 -0.5193370 -0.1489642  0.2940706 -1.0152380 
+        V8 
+-0.5718523 
 
 $ShortestPathLengths
-    V1       V2        V3        V4       V5       V6       V7        V8
-V1   0 5.700019  1.943257  2.265991 5.715231 2.763749 3.711177  4.954201
-V2 Inf 0.000000  3.238940  7.165181 7.010914 2.603737 3.507118  6.249884
-V3 Inf 5.325176  0.000000  5.976258 3.771974 7.928913 7.950482  3.010944
-V4 Inf 5.516577  8.755517  0.000000 5.430191 6.209490 4.175626  7.270580
-V5 Inf 2.552564  5.791503  9.717744 0.000000 5.156301 6.059682  8.802448
-V6 Inf 8.558272 10.153397 13.525333 6.005709 0.000000 9.540629 13.164342
-V7 Inf 6.267130  9.506069  3.984703 5.477571 8.870867 0.000000  3.952898
-V8 Inf 2.314232  5.553172  8.924241 4.568496 4.917969 4.939537  0.000000
+         V1       V2        V3        V4        V5       V6        V7        V8
+V1 0.000000 9.857263 10.301114  7.194495  7.468094 4.210512  8.617493 10.183709
+V2 6.821349 0.000000  2.300362  5.032945 10.311282 8.147526  4.735490  8.022159
+V3 8.881303 2.059954  0.000000  2.732583  8.010919 9.674736  6.795444  5.721797
+V4 7.881161 3.678807  5.979169  0.000000  5.278337 6.942153  8.414297  2.989214
+V5 2.602824 4.293433  4.106320  6.838903  0.000000 5.535034  9.028923  9.828117
+V6 5.860406 5.646751  6.090602  8.823185  3.257582 0.000000 10.382241 11.812399
+V7 2.085859 6.728823  4.668869  7.401452  6.595413 3.412036  0.000000 10.390666
+V8 5.775185 9.599691 10.043541 12.776124  7.210521 3.952939  6.862411  0.000000
 
 $ShortestPaths
    V1   V2   V3   V4   V5   V6   V7   V8  
@@ -618,21 +650,33 @@ V8 NULL NULL NULL NULL NULL NULL NULL NULL</code></pre>
 </div>
 <p>可以将其绘制出来，下面的代码依次绘制同期网络、时序网络和个体间网络。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(contemporaneous) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(contemporaneous) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="时间网络分析_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(temporal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(temporal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="时间网络分析_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(between)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">centralityPlot</span>(between)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="时间网络分析_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>完全可以对绘图函数的参数做些个性化调整，这里不多展示了。</p>
@@ -641,38 +685,38 @@ V8 NULL NULL NULL NULL NULL NULL NULL NULL</code></pre>
 <h4 class="anchored" data-anchor-id="桥梁症状分析">2.5 桥梁症状分析</h4>
 <p>先人为对模拟数据的节点进行分组：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>groups<span class="ot">=</span><span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'A'</span>,<span class="dv">4</span>),<span class="fu">rep</span>(<span class="st">'B'</span>,<span class="dv">2</span>),<span class="fu">rep</span>(<span class="st">'C'</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>groups<span class="ot">=</span><span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'A'</span>,<span class="dv">4</span>),<span class="fu">rep</span>(<span class="st">'B'</span>,<span class="dv">2</span>),<span class="fu">rep</span>(<span class="st">'C'</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>计算桥梁中心性指标：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> <span class="fu">bridge</span>(contemporaneous, <span class="at">communities=</span> groups, <span class="at">directed=</span>F)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> <span class="fu">bridge</span>(contemporaneous, <span class="at">communities=</span> groups, <span class="at">directed=</span>F)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$`Bridge Strength`
        V1        V2        V3        V4        V5        V6        V7        V8 
-0.6312836 0.6691977 0.5972349 0.7222251 0.5231023 0.2033041 0.4335224 0.7887587 
+0.3535438 0.2111714 0.1033853 0.6356809 0.9258186 0.3412804 1.2613704 0.4261309 
 
 $`Bridge Betweenness`
 V1 V2 V3 V4 V5 V6 V7 V8 
- 5  1  1  5  0  1  2  3 
+ 4  0  0  2  0  3  0  0 
 
 $`Bridge Closeness`
         V1         V2         V3         V4         V5         V6         V7 
-0.14014223 0.10893181 0.12090457 0.13274157 0.08197854 0.13031448 0.11021654 
+0.14330694        NaN 0.05915372 0.07055906 0.06471345 0.10082979        NaN 
         V8 
-0.12678535 
+       NaN 
 
 $`Bridge Expected Influence (1-step)`
-          V1           V2           V3           V4           V5           V6 
- 0.631283628 -0.669197749  0.067008531  0.243254960  0.260423716 -0.006325689 
-          V7           V8 
- 0.433522386 -0.075458952 
+         V1          V2          V3          V4          V5          V6 
+ 0.12145776 -0.21117138 -0.10338527 -0.63568093 -0.32963154 -0.01290559 
+         V7          V8 
+-1.01523798 -0.42613095 
 
 $`Bridge Expected Influence (2-step)`
          V1          V2          V3          V4          V5          V6 
- 0.51172975 -0.76244179  0.24764776  0.32814244  0.25875117  0.03340721 
+ 0.15761269 -0.07232028 -0.45720635 -0.61214425 -0.71277807  0.14007662 
          V7          V8 
- 0.50311573  0.02808020 
+-1.44229388 -0.41777398 
 
 $communities
 [1] "A" "A" "A" "A" "B" "B" "C" "C"</code></pre>
@@ -680,14 +724,22 @@ $communities
 </div>
 <p>简单绘图：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(b, <span class="at">include=</span><span class="fu">c</span>(<span class="st">"Bridge Expected Influence (2-step)"</span>, <span class="st">"Bridge Strength"</span>, <span class="st">"Bridge Closeness"</span>),</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">theme_bw=</span>F, <span class="at">raw0 =</span> T, <span class="at">signed=</span>T) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(b, <span class="at">include=</span><span class="fu">c</span>(<span class="st">"Bridge Expected Influence (2-step)"</span>, <span class="st">"Bridge Strength"</span>, <span class="st">"Bridge Closeness"</span>),</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">theme_bw=</span>F, <span class="at">raw0 =</span> T, <span class="at">signed=</span>T) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Vectorized input to `element_text()` is not officially supported.
 ℹ Results may be unexpected or may change in future versions of ggplot2.</code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
 <div class="cell-output-display">
-<p><img src="时间网络分析_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="时间网络分析_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -699,11 +751,80 @@ $communities
 <p>你如果有一份生态瞬时数据或者密集追踪数据，且想要进行时间网络分析，建议在建模前检查下数据，包括正态性（不服从也可以做）、平稳性（KPSS平稳性检验，文献提到可以用R包tseries实现，要一个个做，所以代码有些复杂），等等。</p>
 <section id="运行环境" class="level4">
 <h4 class="anchored" data-anchor-id="运行环境"><strong>运行环境</strong></h4>
-<p><code>{r}</code></p>
-<p><code>sessionInfo()}</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.3.2 (2023-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19045)
+
+Matrix products: default
 
 
-</section>
+locale:
+[1] LC_COLLATE=Chinese (Simplified)_China.utf8 
+[2] LC_CTYPE=Chinese (Simplified)_China.utf8   
+[3] LC_MONETARY=Chinese (Simplified)_China.utf8
+[4] LC_NUMERIC=C                               
+[5] LC_TIME=Chinese (Simplified)_China.utf8    
+
+time zone: Asia/Shanghai
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] networktools_1.5.1 qgraph_1.9.8       mlVAR_0.5.2       
+
+loaded via a namespace (and not attached):
+  [1] mnormt_2.1.1            pbapply_1.7-2           polynom_1.4-1          
+  [4] gridExtra_2.3           fdrtool_1.2.17          rlang_1.1.3            
+  [7] magrittr_2.0.3          e1071_1.7-13            compiler_4.3.2         
+ [10] gdata_3.0.0             png_0.1-8               vctrs_0.6.4            
+ [13] reshape2_1.4.4          quadprog_1.5-8          stringr_1.5.1          
+ [16] pkgconfig_2.0.3         shape_1.4.6             fastmap_1.1.1          
+ [19] arm_1.13-1              backports_1.4.1         labeling_0.4.3         
+ [22] pbivnorm_0.6.0          pander_0.6.5            utf8_1.2.4             
+ [25] rmarkdown_2.25          heplots_1.6.0           nloptr_2.0.3           
+ [28] purrr_1.0.2             jomo_2.7-6              xfun_0.41              
+ [31] glmnet_4.1-8            clusterGeneration_1.3.8 jsonlite_1.8.7         
+ [34] pan_1.9                 jpeg_0.1-10             psych_2.3.9            
+ [37] broom_1.0.5             parallel_4.3.2          lavaan_0.6-17          
+ [40] cluster_2.1.4           R6_2.5.1                stringi_1.8.1          
+ [43] RColorBrewer_1.1-3      smacof_2.1-5            car_3.1-2              
+ [46] boot_1.3-28.1           rpart_4.1.21            Rcpp_1.0.11            
+ [49] iterators_1.0.14        knitr_1.45              base64enc_0.1-3        
+ [52] R.utils_2.12.3          weights_1.0.4           Matrix_1.6-5           
+ [55] splines_4.3.2           nnls_1.5                nnet_7.3-19            
+ [58] igraph_2.0.1.1          tidyselect_1.2.0        rstudioapi_0.16.0      
+ [61] abind_1.4-5             yaml_2.3.7              doParallel_1.0.17      
+ [64] codetools_0.2-19        lattice_0.21-9          tibble_3.2.1           
+ [67] plyr_1.8.9              withr_2.5.2             coda_0.19-4            
+ [70] evaluate_0.23           foreign_0.8-85          fastDummies_1.7.3      
+ [73] survival_3.5-7          proxy_0.4-27            texreg_1.39.3          
+ [76] pillar_1.9.0            carData_3.0-5           mice_3.16.0            
+ [79] checkmate_2.3.0         foreach_1.5.2           stats4_4.3.2           
+ [82] ellipse_0.5.0           generics_0.1.3          ggplot2_3.5.0          
+ [85] candisc_0.8-6           munsell_0.5.0           scales_1.3.0           
+ [88] minqa_1.2.6             gtools_3.9.5            xtable_1.8-4           
+ [91] class_7.3-22            glue_1.6.2              Hmisc_5.1-1            
+ [94] tools_4.3.2             data.table_1.15.4       lme4_1.1-35.1          
+ [97] gsubfn_0.7              rgl_1.2.1               mvtnorm_1.2-3          
+[100] grid_4.3.2              plotrix_3.8-4           tidyr_1.3.1            
+[103] MplusAutomation_1.1.1   colorspace_2.1-0        nlme_3.1-163           
+[106] graphicalVAR_0.3.4      htmlTable_2.4.2         eigenmodel_1.11        
+[109] proto_1.0.0             Formula_1.2-5           cli_3.6.2              
+[112] fansi_1.0.5             dplyr_1.1.4             corpcor_1.6.10         
+[115] glasso_1.11             gtable_0.3.4            R.methodsS3_1.8.2      
+[118] digest_0.6.33           wordcloud_2.6           farver_2.1.1           
+[121] htmlwidgets_1.6.2       htmltools_0.5.7         R.oo_1.25.0            
+[124] lifecycle_1.0.4         httr_1.4.7              mitml_0.4-5            
+[127] MASS_7.3-60            </code></pre>
+</div>
+</div>
+
+
 </section>
 </section>
 
@@ -743,18 +864,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -786,11 +896,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -800,8 +949,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -813,7 +971,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -857,6 +1138,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -882,6 +1164,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -943,17 +1251,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./交叉滞后网络.html" class="pagination-link">
+      <a href="./交叉滞后网络.html" class="pagination-link" aria-label="交叉滞后网络">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">交叉滞后网络</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./协变量处理方法.html" class="pagination-link">
+      <a href="./协变量处理方法.html" class="pagination-link" aria-label="协变量处理方法">
         <span class="nav-page-text">协变量处理方法</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
